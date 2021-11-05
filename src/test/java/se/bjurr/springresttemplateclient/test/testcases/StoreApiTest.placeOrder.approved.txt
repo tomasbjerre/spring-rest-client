@@ -1,0 +1,12 @@
+[ {
+  "url" : "http://localhost:X/store/order",
+  "method" : "POST",
+  "headers" : {
+    "Accept" : "application/json",
+    "Connection" : "keep-alive",
+    "Content-Length" : "86",
+    "Content-Type" : "application/json"
+  },
+  "cookies" : { },
+  "body" : "{\"id\":123,\"petId\":null,\"quantity\":null,\"shipDate\":null,\"status\":null,\"complete\":false}"
+} ]

@@ -1,0 +1,25 @@
+apply plugin: 'java-library'
+
+buildscript {
+ repositories {
+  mavenCentral()
+  mavenLocal()
+ }
+ dependencies {
+  classpath 'se.bjurr.gradle:gradle-scripts:2.+'
+ }
+}
+apply from: project.buildscript.classLoader.getResource('main.gradle').toURI()
+
+
+dependencies {
+ compileOnly 'org.springframework:spring-web:5.3.12'
+ 
+ testImplementation 'org.springframework:spring-web:5.3.12'
+ testImplementation 'junit:junit:4.12'
+ testImplementation 'org.assertj:assertj-core:2.3.0'
+ testImplementation 'org.mockito:mockito-all:1.8.5'
+ testImplementation 'com.approvaltests:approvaltests:12.1.1'
+ testImplementation 'com.github.tomakehurst:wiremock:2.27.2'
+ testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+}

@@ -1,0 +1,10 @@
+[ {
+  "url" : "http://localhost:X/user/tomas",
+  "method" : "GET",
+  "headers" : {
+    "Accept" : "application/json",
+    "Connection" : "keep-alive"
+  },
+  "cookies" : { },
+  "body" : ""
+} ]
