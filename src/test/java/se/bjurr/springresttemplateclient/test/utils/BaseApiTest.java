@@ -23,7 +23,6 @@ import se.bjurr.springresttemplateclient.SpringRestTemplateClientBuilder;
 public abstract class BaseApiTest<T> {
 
   private WireMockServer wiremock;
-  private T sut;
 
   @Before
   public void baseBefore() {
@@ -40,19 +39,11 @@ public abstract class BaseApiTest<T> {
             .any(WireMock.anyUrl()) //
             .willReturn(WireMock.okForContentType(MediaType.APPLICATION_JSON_VALUE, "{}"));
     this.wiremock.stubFor(anythingIsOk);
-
-    this.sut = this.buildSut(this.getSutClass());
   }
 
   @After
   public void after() {
     this.wiremock.shutdown();
-  }
-
-  public abstract Class<T> getSutClass();
-
-  public T getSut() {
-    return this.sut;
   }
 
   public void verify() {
@@ -63,15 +54,17 @@ public abstract class BaseApiTest<T> {
     Approvals.verify(actual, new Options().withReporter(new AutoApproveReporter()));
   }
 
-  public String getMockUrl() {
-    return "http://localhost:" + this.wiremock.port();
+  public abstract Class<T> getSutClass();
+
+  public T getSut() {
+    return SpringRestTemplateClientBuilder.create(this.getSutClass())
+        .setRestTemplate(this.restTemplate())
+        .setUrl(this.getMockUrl())
+        .build();
   }
 
-  private T buildSut(final Class<T> clazz) {
-    return SpringRestTemplateClientBuilder.create(clazz)
-        .setRestTemplate(this.restTemplate())
-        .setUrl("http://localhost:" + this.wiremock.port())
-        .build();
+  public String getMockUrl() {
+    return "http://localhost:" + this.wiremock.port();
   }
 
   private RestTemplate restTemplate() {

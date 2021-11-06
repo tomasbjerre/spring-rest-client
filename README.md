@@ -1,6 +1,6 @@
 # Spring RestTemplate Client
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplate/spring-resttemplate-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplate/spring-resttemplate-client)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplateclient/spring-resttemplate-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplateclient/spring-resttemplate-client)
 
 Dynamically create Spring RestTemplate (proxy class) client from annotated interface.
 
@@ -21,3 +21,9 @@ final ResponseEntity<MyDTO> response = myClient.getMyDto();
 
 The method invocation (`getMyDto()`) on that object (`myClient`) will be translated to a HTTP request using the annotations of that method in that interface. And `response` will be the result of that HTTP request.
 
+Supports both signatures:
+
+ * `ResponseEntity<X> deleteOrder(Long)`
+ * `X deleteOrder(Long)`
+
+See also [test cases](/src/test/java/se/bjurr/springresttemplateclient/test/testcases).
