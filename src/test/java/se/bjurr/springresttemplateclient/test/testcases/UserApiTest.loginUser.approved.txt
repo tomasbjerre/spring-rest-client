@@ -1,0 +1,10 @@
+[ {
+  "url" : "http://localhost:X/user/login?username=a&password=b",
+  "method" : "GET",
+  "headers" : {
+    "Accept" : "application/json",
+    "Connection" : "keep-alive"
+  },
+  "cookies" : { },
+  "body" : ""
+} ]

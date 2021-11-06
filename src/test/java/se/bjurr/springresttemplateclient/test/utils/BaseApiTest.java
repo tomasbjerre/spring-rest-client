@@ -8,6 +8,7 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
+import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import java.util.Arrays;
 import java.util.List;
 import org.approvaltests.Approvals;
@@ -34,16 +35,24 @@ public abstract class BaseApiTest<T> {
     this.wiremock = new WireMockServer(configuration);
     this.wiremock.start();
 
-    final MappingBuilder anythingIsOk =
-        WireMock //
-            .any(WireMock.anyUrl()) //
-            .willReturn(WireMock.okForContentType(MediaType.APPLICATION_JSON_VALUE, "{}"));
-    this.wiremock.stubFor(anythingIsOk);
+    this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "{}");
   }
 
   @After
   public void after() {
     this.wiremock.shutdown();
+  }
+
+  public void mockResponse(final String mediaType, final String body) {
+    for (final StubMapping sm : this.wiremock.getStubMappings()) {
+      this.wiremock.removeStub(sm);
+    }
+
+    final MappingBuilder anythingIsOk =
+        WireMock //
+            .any(WireMock.anyUrl()) //
+            .willReturn(WireMock.okForContentType(mediaType, body));
+    this.wiremock.stubFor(anythingIsOk);
   }
 
   public void verify() {
@@ -69,7 +78,8 @@ public abstract class BaseApiTest<T> {
 
   private RestTemplate restTemplate() {
     final RestTemplate restTemplate = new RestTemplate();
-    restTemplate.setMessageConverters(Arrays.asList(new MappingJackson2HttpMessageConverter()));
+    restTemplate.setMessageConverters(
+        Arrays.asList(new MappingJackson2HttpMessageConverter(), new MappingTextPlain()));
     return restTemplate;
   }
 
