@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.ResolvableType;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -101,7 +100,21 @@ public final class InvocationParser {
 
       final RequestParam rp = p.getAnnotation(RequestParam.class);
       if (rp != null) {
-        map.add(rp.value(), args[i].toString());
+        final Object arg = args[i];
+        if (arg instanceof List) {
+          @SuppressWarnings("unchecked")
+          final List<Object> arr = (List<Object>) arg;
+          for (final Object element : arr) {
+            map.add(rp.value(), element.toString());
+          }
+        } else if (arg.getClass().isArray()) {
+          final Object[] arr = (Object[]) arg;
+          for (final Object element : arr) {
+            map.add(rp.value(), element.toString());
+          }
+        } else {
+          map.add(rp.value(), args[i].toString());
+        }
       }
     }
     return map;
@@ -131,23 +144,9 @@ public final class InvocationParser {
     return Optional.empty();
   }
 
-  public static Class<?> getGenericTypeOfMethod(final Object proxy, final Method method) {
-    final String typeName = method.getGenericReturnType().getTypeName();
-    final Pattern pattern = Pattern.compile("<(.+)>");
-    final Matcher matcher = pattern.matcher(typeName);
-    if (!matcher.find()) {
-      throw new RuntimeException("Cannot find generic type of " + typeName);
-    }
-    String className = matcher.group(1);
-    if (className.contains("<")) {
-      className = className.substring(0, className.indexOf("<"));
-    }
-    try {
-      return proxy.getClass().getClassLoader().loadClass(className);
-    } catch (final ClassNotFoundException e) {
-      throw new RuntimeException(
-          "Unable to load " + className + " as generic type found in " + typeName, e);
-    }
+  public static Type getGenericTypeOfMethod(final Object proxy, final Method method) {
+    final ResolvableType r = ResolvableType.forMethodReturnType(method);
+    return r.getGeneric(0).getType();
   }
 
   public static InvocationDetails getInvocationDetails(

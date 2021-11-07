@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -59,7 +58,6 @@ public class PetApiTest extends BaseApiTest<PetApi> {
   }
 
   @Test
-  @Ignore
   public void findPetsByStatusResponseEntity() {
     this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "[{\"name\":\"a\"}]");
 

@@ -1,5 +1,5 @@
 [ {
-  "url" : "http://localhost:X/pet/findByStatusListMap?status=%5Basdas%5D",
+  "url" : "http://localhost:X/pet/findByStatusListMap?status=asdas",
   "method" : "GET",
   "headers" : {
     "Accept" : "application/json",
