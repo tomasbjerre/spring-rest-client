@@ -40,6 +40,8 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
     final BodyBuilder bodyBuilder =
         RequestEntity.method(invocationDetails.getRequestDetails().getRequestMethod(), uri);
 
+    bodyBuilder.headers(invocationDetails.getHeaders());
+
     if (invocationDetails.getRequestDetails().findConsumes().isPresent()) {
       bodyBuilder.contentType(invocationDetails.getRequestDetails().findConsumes().get());
     }

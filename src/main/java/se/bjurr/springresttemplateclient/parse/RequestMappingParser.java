@@ -1,5 +1,6 @@
 package se.bjurr.springresttemplateclient.parse;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,16 @@ public class RequestMappingParser {
       produces = MediaType.parseMediaType(producesString);
     }
 
-    return new RequestDetails(requestMethod, requestPath, consumes, produces);
+    final HttpHeaders httpHeaders = new HttpHeaders();
+    for (final String header : requestMapping.headers()) {
+      final int equalityIndex = header.indexOf("=");
+      if (equalityIndex == -1) {
+        throw new RuntimeException("Cannot parse header '" + header + "'");
+      }
+      final String[] spitted = header.split("=");
+      httpHeaders.add(spitted[0], spitted[1]);
+    }
+
+    return new RequestDetails(requestMethod, requestPath, consumes, produces, httpHeaders);
   }
 }

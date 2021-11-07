@@ -1,0 +1,12 @@
+[ {
+  "url" : "http://localhost:X/pet/123?name=asd&status=fgfg",
+  "method" : "POST",
+  "headers" : {
+    "Accept" : "application/json, application/*+json",
+    "Connection" : "keep-alive",
+    "Content-Length" : "0",
+    "Content-Type" : "application/x-www-form-urlencoded"
+  },
+  "cookies" : { },
+  "body" : ""
+} ]

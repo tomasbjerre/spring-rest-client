@@ -19,7 +19,7 @@ public interface PetApi {
 
   @RequestMapping(
       value = "/pet",
-      consumes = {"application/json", "application/xml"},
+      consumes = {"application/json"},
       method = RequestMethod.POST)
   ResponseEntity<Void> addPet(@RequestBody Pet body);
 
@@ -30,27 +30,27 @@ public interface PetApi {
 
   @RequestMapping(
       value = "/pet/findByStatus",
-      produces = {"application/json", "application/xml"},
+      produces = {"application/json"},
       method = RequestMethod.GET)
   ResponseEntity<List<Pet>> findPetsByStatus(
       @RequestParam(value = "status", required = true) List<String> status);
 
   @RequestMapping(
       value = "/pet/findByTags",
-      produces = {"application/json", "application/xml"},
+      produces = {"application/json"},
       method = RequestMethod.GET)
   ResponseEntity<List<Pet>> findPetsByTags(
       @RequestParam(value = "tags", required = true) List<String> tags);
 
   @RequestMapping(
       value = "/pet/{petId}",
-      produces = {"application/json", "application/xml"},
+      produces = {"application/json"},
       method = RequestMethod.GET)
   ResponseEntity<Pet> getPetById(@PathVariable("petId") Long petId);
 
   @RequestMapping(
       value = "/pet",
-      consumes = {"application/json", "application/xml"},
+      consumes = {"application/json"},
       method = RequestMethod.PUT)
   ResponseEntity<Void> updatePet(@RequestBody Pet body);
 

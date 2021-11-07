@@ -4,11 +4,13 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -19,10 +21,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import se.bjurr.springresttemplateclient.parse.model.InvocationDetails;
 import se.bjurr.springresttemplateclient.parse.model.RequestDetails;
 
@@ -103,6 +105,19 @@ public final class InvocationParser {
     return map;
   }
 
+  private static MultiValueMap<String, String> getHeaderVariables(
+      final Method method, final Object[] args) {
+    final MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+    for (int i = 0; i < method.getParameterCount(); i++) {
+      final Parameter p = method.getParameters()[i];
+      final RequestHeader rh = p.getAnnotation(RequestHeader.class);
+      if (rh != null) {
+        map.add(rh.value(), args[i].toString());
+      }
+    }
+    return map;
+  }
+
   public static Optional<Object> findReqestBody(final Method method, final Object[] args) {
     for (int i = 0; i < method.getParameterCount(); i++) {
       final Parameter p = method.getParameters()[i];
@@ -122,7 +137,13 @@ public final class InvocationParser {
     if (!matcher.find()) {
       throw new RuntimeException("Cannot find generic type of " + typeName);
     }
-    return proxy.getClass().getClassLoader().loadClass(matcher.group(1));
+    final String className = matcher.group(1);
+    try {
+      return proxy.getClass().getClassLoader().loadClass(className);
+    } catch (final ClassNotFoundException e) {
+      throw new RuntimeException(
+          "Unable to load " + className + " as generic type found in " + typeName, e);
+    }
   }
 
   public static InvocationDetails getInvocationDetails(
@@ -145,13 +166,24 @@ public final class InvocationParser {
     } else {
       responseType = method.getReturnType();
     }
+
+    final HttpHeaders headers = requestDetails.getHttpHeaders();
+    final MultiValueMap<String, String> headerParams =
+        InvocationParser.getHeaderVariables(method, args);
+    for (final Entry<String, List<String>> header : headerParams.entrySet()) {
+      for (final String value : header.getValue()) {
+        headers.add(header.getKey(), value);
+      }
+    }
+
     return new InvocationDetails(
-            requestDetails,
-            queryParams,
-            pathVariables,
-            requestBody.orElse(null),
-            methodReurnTypeIsResponseEntity,
-            responseType);
+        requestDetails,
+        queryParams,
+        pathVariables,
+        requestBody.orElse(null),
+        methodReurnTypeIsResponseEntity,
+        responseType,
+        headers);
   }
 
   private static RequestDetails getRequestDetails(final Method method) {

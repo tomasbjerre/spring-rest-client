@@ -2,6 +2,7 @@ package se.bjurr.springresttemplateclient.parse.model;
 
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
 
 public class InvocationDetails {
@@ -12,6 +13,7 @@ public class InvocationDetails {
   private final Object requestBody;
   private final boolean methodReurnTypeIsResponseEntity;
   private final Class<?> responseType;
+  private final HttpHeaders headers;
 
   public InvocationDetails(
       final RequestDetails requestDetails,
@@ -19,13 +21,15 @@ public class InvocationDetails {
       final Map<String, String> pathVariables,
       final Object requestBody,
       final boolean methodReurnTypeIsResponseEntity,
-      final Class<?> responseType) {
+      final Class<?> responseType,
+      final HttpHeaders headers) {
     this.requestDetails = requestDetails;
     this.queryParams = queryParams;
     this.pathVariables = pathVariables;
     this.requestBody = requestBody;
     this.methodReurnTypeIsResponseEntity = methodReurnTypeIsResponseEntity;
     this.responseType = responseType;
+    this.headers = headers;
   }
 
   public Map<String, String> getPathVariables() {
@@ -34,6 +38,10 @@ public class InvocationDetails {
 
   public MultiValueMap<String, String> getQueryParams() {
     return this.queryParams;
+  }
+
+  public HttpHeaders getHeaders() {
+    return this.headers;
   }
 
   public Optional<Object> findRequestBody() {
@@ -66,6 +74,8 @@ public class InvocationDetails {
         + this.methodReurnTypeIsResponseEntity
         + ", responseType="
         + this.responseType
+        + ", headers="
+        + this.headers
         + "]";
   }
 }
