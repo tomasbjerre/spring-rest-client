@@ -2,6 +2,18 @@
 
 Changelog of spring-resttemplate-client.
 
+## [0.2.2](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/0.2.2) (2021-11-07)
+
+
+
+
+
+### Bug Fixes
+
+-  ResponseEntity<List<X>> ([53b8d](https://github.com/tomasbjerre/spring-resttemplate-client/commit/53b8d19615a89d1))  
+
+
+
 ## [0.2.1](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/0.2.1) (2021-11-07)
 
 
