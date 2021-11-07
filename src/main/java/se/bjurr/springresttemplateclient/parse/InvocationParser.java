@@ -3,6 +3,7 @@ package se.bjurr.springresttemplateclient.parse;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -129,15 +131,17 @@ public final class InvocationParser {
     return Optional.empty();
   }
 
-  public static Class<?> getGenericTypeOfMethod(final Object proxy, final Method method)
-      throws ClassNotFoundException {
+  public static Class<?> getGenericTypeOfMethod(final Object proxy, final Method method) {
     final String typeName = method.getGenericReturnType().getTypeName();
-    final Pattern pattern = Pattern.compile("<(.*?)>");
+    final Pattern pattern = Pattern.compile("<(.+)>");
     final Matcher matcher = pattern.matcher(typeName);
     if (!matcher.find()) {
       throw new RuntimeException("Cannot find generic type of " + typeName);
     }
-    final String className = matcher.group(1);
+    String className = matcher.group(1);
+    if (className.contains("<")) {
+      className = className.substring(0, className.indexOf("<"));
+    }
     try {
       return proxy.getClass().getClassLoader().loadClass(className);
     } catch (final ClassNotFoundException e) {
@@ -160,11 +164,23 @@ public final class InvocationParser {
     final boolean methodReurnTypeIsResponseEntity =
         method.getReturnType().isAssignableFrom(ResponseEntity.class);
 
-    Class<?> responseType = null;
+    ParameterizedTypeReference<?> responseType = null;
     if (methodReurnTypeIsResponseEntity) {
-      responseType = InvocationParser.getGenericTypeOfMethod(proxy, method);
+      responseType =
+          new ParameterizedTypeReference<Type>() {
+            @Override
+            public Type getType() {
+              return InvocationParser.getGenericTypeOfMethod(proxy, method);
+            }
+          };
     } else {
-      responseType = method.getReturnType();
+      responseType =
+          new ParameterizedTypeReference<Type>() {
+            @Override
+            public Type getType() {
+              return method.getGenericReturnType();
+            }
+          };
     }
 
     final HttpHeaders headers = requestDetails.getHttpHeaders();

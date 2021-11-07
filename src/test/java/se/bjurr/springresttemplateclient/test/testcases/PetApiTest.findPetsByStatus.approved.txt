@@ -1,0 +1,10 @@
+[ {
+  "url" : "http://localhost:X/pet/findByStatus?status=%5Basdas%5D",
+  "method" : "GET",
+  "headers" : {
+    "Accept" : "application/json",
+    "Connection" : "keep-alive"
+  },
+  "cookies" : { },
+  "body" : ""
+} ]

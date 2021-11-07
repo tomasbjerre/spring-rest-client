@@ -34,7 +34,6 @@ public class PetApiTest extends BaseApiTest<PetApi> {
   }
 
   @Test
-  @Ignore
   public void findPetsByStatus() {
     this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "[{\"name\":\"a\"}]");
 
@@ -67,20 +66,8 @@ public class PetApiTest extends BaseApiTest<PetApi> {
     final ResponseEntity<List<Pet>> actual =
         this.getSut().findPetsByStatusResponseEntity(Arrays.asList("asdas"));
 
-    assertThat(actual.getBody().get(0).getName()).isEqualTo("a");
-
-    this.verify();
-  }
-
-  @Test
-  @Ignore
-  public void findPetsByTags() {
-    this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "[{\"name\":\"a\"}]");
-
-    final ResponseEntity<List<Pet>> actual = this.getSut().findPetsByTags(Arrays.asList("asdas"));
-
-    assertThat(actual.getBody().get(0).getName()).isEqualTo("a");
-
+    final Pet pet = actual.getBody().get(0);
+    assertThat(pet.getName()).isEqualTo("a");
     this.verify();
   }
 

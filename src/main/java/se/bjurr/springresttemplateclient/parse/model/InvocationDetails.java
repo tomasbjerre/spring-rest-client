@@ -2,6 +2,7 @@ package se.bjurr.springresttemplateclient.parse.model;
 
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
 
@@ -12,7 +13,7 @@ public class InvocationDetails {
   private final Map<String, String> pathVariables;
   private final Object requestBody;
   private final boolean methodReurnTypeIsResponseEntity;
-  private final Class<?> responseType;
+  private final ParameterizedTypeReference<?> responseType;
   private final HttpHeaders headers;
 
   public InvocationDetails(
@@ -21,7 +22,7 @@ public class InvocationDetails {
       final Map<String, String> pathVariables,
       final Object requestBody,
       final boolean methodReurnTypeIsResponseEntity,
-      final Class<?> responseType,
+      final ParameterizedTypeReference<?> responseType,
       final HttpHeaders headers) {
     this.requestDetails = requestDetails;
     this.queryParams = queryParams;
@@ -52,7 +53,7 @@ public class InvocationDetails {
     return this.requestDetails;
   }
 
-  public Class<?> getResponseType() {
+  public ParameterizedTypeReference<?> getResponseType() {
     return this.responseType;
   }
 
