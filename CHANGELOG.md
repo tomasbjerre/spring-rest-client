@@ -2,6 +2,18 @@
 
 Changelog of spring-resttemplate-client.
 
+## [0.2.0](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/0.2.0) (2021-11-07)
+
+
+
+### Features
+
+-  headers ([55399](https://github.com/tomasbjerre/spring-resttemplate-client/commit/55399d586e82eca))  
+
+
+
+
+
 ## [0.1.0](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/0.1.0) (2021-11-06)
 
 
