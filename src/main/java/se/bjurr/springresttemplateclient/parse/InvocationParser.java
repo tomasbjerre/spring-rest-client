@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import se.bjurr.springresttemplateclient.parse.model.InvocationDetails;
+import se.bjurr.springresttemplateclient.parse.model.RequestDetails;
 
 public final class InvocationParser {
 
@@ -59,6 +64,15 @@ public final class InvocationParser {
       }
     }
     return Optional.empty();
+  }
+
+  public static <T> T getAnnotation(
+      final Method method, final Class<T> clazz, final String message) {
+    final Optional<T> requestMapping = InvocationParser.findAnnotation(method, clazz);
+    if (!requestMapping.isPresent()) {
+      throw new RuntimeException(message);
+    }
+    return requestMapping.get();
   }
 
   public static Map<String, String> getPathVariables(final Method method, final Object[] args) {
@@ -109,5 +123,43 @@ public final class InvocationParser {
       throw new RuntimeException("Cannot find generic type of " + typeName);
     }
     return proxy.getClass().getClassLoader().loadClass(matcher.group(1));
+  }
+
+  public static InvocationDetails getInvocationDetails(
+      final Object proxy, final Method method, final Object[] args) throws ClassNotFoundException {
+    final RequestDetails requestDetails = getRequestDetails(method);
+
+    final MultiValueMap<String, String> queryParams =
+        InvocationParser.getRequestVariables(method, args);
+
+    final Map<String, String> pathVariables = InvocationParser.getPathVariables(method, args);
+
+    final Optional<Object> requestBody = InvocationParser.findReqestBody(method, args);
+
+    final boolean methodReurnTypeIsResponseEntity =
+        method.getReturnType().isAssignableFrom(ResponseEntity.class);
+
+    Class<?> responseType = null;
+    if (methodReurnTypeIsResponseEntity) {
+      responseType = InvocationParser.getGenericTypeOfMethod(proxy, method);
+    } else {
+      responseType = method.getReturnType();
+    }
+    return new InvocationDetails(
+            requestDetails,
+            queryParams,
+            pathVariables,
+            requestBody.orElse(null),
+            methodReurnTypeIsResponseEntity,
+            responseType);
+  }
+
+  private static RequestDetails getRequestDetails(final Method method) {
+    final Optional<RequestMapping> requestMapping =
+        InvocationParser.findAnnotation(method, RequestMapping.class);
+    if (requestMapping.isPresent()) {
+      return RequestMappingParser.getRequestDetails(requestMapping.get());
+    }
+    throw new RuntimeException("Only RequestMapping is, currently, implemented. PR:s are welcome.");
   }
 }

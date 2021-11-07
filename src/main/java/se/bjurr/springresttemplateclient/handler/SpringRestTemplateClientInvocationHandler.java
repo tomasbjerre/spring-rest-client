@@ -3,19 +3,13 @@ package se.bjurr.springresttemplateclient.handler;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.net.URI;
-import java.util.Map;
-import java.util.Optional;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.RequestEntity.BodyBuilder;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import se.bjurr.springresttemplateclient.parse.InvocationParser;
+import se.bjurr.springresttemplateclient.parse.model.InvocationDetails;
 
 public class SpringRestTemplateClientInvocationHandler<T> implements InvocationHandler {
 
@@ -31,79 +25,42 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
   @Override
   public Object invoke(final Object proxy, final Method method, final Object[] args)
       throws Throwable {
+    final InvocationDetails invocationDetails =
+        InvocationParser.getInvocationDetails(proxy, method, args);
+    return this.doRequest(invocationDetails);
+  }
 
-    final Optional<RequestMapping> requestMapping =
-        InvocationParser.findAnnotation(method, RequestMapping.class);
-    if (!requestMapping.isPresent()) {
-      throw new RuntimeException(
-          "Only RequestMapping is, currently, implemented. PR:s are welcome.");
-    }
-
-    if (requestMapping.get().method().length != 1) {
-      throw new RuntimeException(
-          "Only one request method, currently, supported. PR:s are welcome.");
-    }
-    final HttpMethod requestMethod = HttpMethod.valueOf(requestMapping.get().method()[0].name());
-
-    if (requestMapping.get().value().length != 1) {
-      throw new RuntimeException("Only one request path, currently, supported. PR:s are welcome.");
-    }
-    final String requestPath = requestMapping.get().value()[0];
-
-    if (requestMapping.get().consumes().length > 1) {
-      throw new RuntimeException(
-          "Only one, or zero, consumes, currently, supported. PR:s are welcome.");
-    }
-    String consumes = null;
-    if (requestMapping.get().consumes().length == 1) {
-      consumes = requestMapping.get().consumes()[0];
-    }
-
-    if (requestMapping.get().produces().length > 1) {
-      throw new RuntimeException(
-          "Only one, or zero, produces, currently, supported. PR:s are welcome.");
-    }
-    String produces = null;
-    if (requestMapping.get().produces().length == 1) {
-      produces = requestMapping.get().produces()[0];
-    }
-
-    final MultiValueMap<String, String> queryParams =
-        InvocationParser.getRequestVariables(method, args);
-    final Map<String, String> pathVariables = InvocationParser.getPathVariables(method, args);
+  private Object doRequest(final InvocationDetails invocationDetails) {
     final URI uri =
         UriComponentsBuilder.fromHttpUrl(this.url) //
-            .path(requestPath)
-            .queryParams(queryParams)
-            .build(pathVariables);
+            .path(invocationDetails.getRequestDetails().getRequestPath())
+            .queryParams(invocationDetails.getQueryParams())
+            .build(invocationDetails.getPathVariables());
 
-    final Optional<Object> requestBody = InvocationParser.findReqestBody(method, args);
+    final BodyBuilder bodyBuilder =
+        RequestEntity.method(invocationDetails.getRequestDetails().getRequestMethod(), uri);
 
-    final BodyBuilder b = RequestEntity.method(requestMethod, uri);
-
-    if (consumes != null) {
-      b.contentType(MediaType.parseMediaType(consumes));
+    if (invocationDetails.getRequestDetails().findConsumes().isPresent()) {
+      bodyBuilder.contentType(invocationDetails.getRequestDetails().findConsumes().get());
     }
 
-    if (produces != null) {
-      b.accept(MediaType.parseMediaType(produces));
+    if (invocationDetails.getRequestDetails().findProduces().isPresent()) {
+      bodyBuilder.accept(invocationDetails.getRequestDetails().findProduces().get());
     }
 
     RequestEntity<?> requestEntity;
-    if (requestBody.isPresent()) {
-      requestEntity = b.body(requestBody.get());
+    if (invocationDetails.findRequestBody().isPresent()) {
+      requestEntity = bodyBuilder.body(invocationDetails.findRequestBody().get());
     } else {
-      requestEntity = b.build();
+      requestEntity = bodyBuilder.build();
     }
 
-    final boolean methodReurnTypeIsResponseEntity =
-        method.getReturnType().isAssignableFrom(ResponseEntity.class);
-    if (methodReurnTypeIsResponseEntity) {
-      final Class<?> responseType = InvocationParser.getGenericTypeOfMethod(proxy, method);
-      return this.restTemplate.exchange(requestEntity, responseType);
+    if (invocationDetails.isMethodReurnTypeResponseEntity()) {
+      return this.restTemplate.exchange(requestEntity, invocationDetails.getResponseType());
     } else {
-      final Class<?> responseType = method.getReturnType();
-      return this.restTemplate.exchange(requestEntity, responseType).getBody();
+      return this.restTemplate
+          .exchange(requestEntity, invocationDetails.getResponseType())
+          .getBody();
     }
   }
 }
