@@ -1,9 +1,12 @@
 package se.bjurr.springresttemplateclient.test.testcases;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import se.bjurr.springresttemplateclient.test.spec.api.UserApi;
 import se.bjurr.springresttemplateclient.test.spec.model.User;
 import se.bjurr.springresttemplateclient.test.utils.BaseApiTest;
@@ -17,7 +20,13 @@ public class UserApiTest extends BaseApiTest<UserApi> {
 
   @Test
   public void getUserByName() {
-    this.getSut().getUserByName("tomas");
+    this.mockResponse(
+        MediaType.APPLICATION_JSON_VALUE,
+        "{\"id\":null,\"username\":null,\"firstName\":null,\"lastName\":null,\"email\":\"asdasd\",\"password\":null,\"phone\":null,\"userStatus\":null}");
+
+    final ResponseEntity<User> actual = this.getSut().getUserByName("tomas");
+
+    assertThat(actual.getBody().getEmail()).isEqualTo("asdasd");
     this.verify();
   }
 

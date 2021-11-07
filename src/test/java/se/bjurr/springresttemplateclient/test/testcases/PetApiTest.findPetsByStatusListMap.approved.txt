@@ -1,5 +1,5 @@
 [ {
-  "url" : "http://localhost:X/store/order/456",
+  "url" : "http://localhost:X/pet/findByStatusListMap?status=%5Basdas%5D",
   "method" : "GET",
   "headers" : {
     "Accept" : "application/json",

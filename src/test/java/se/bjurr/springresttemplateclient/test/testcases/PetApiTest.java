@@ -1,7 +1,14 @@
 package se.bjurr.springresttemplateclient.test.testcases;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import se.bjurr.springresttemplateclient.test.spec.api.PetApi;
 import se.bjurr.springresttemplateclient.test.spec.model.Category;
 import se.bjurr.springresttemplateclient.test.spec.model.Pet;
@@ -26,21 +33,64 @@ public class PetApiTest extends BaseApiTest<PetApi> {
     this.verify();
   }
 
-  // @Test
+  @Test
+  @Ignore
   public void findPetsByStatus() {
-    this.getSut().findPetsByStatus(Arrays.asList("asdas"));
+    this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "[{\"name\":\"a\"}]");
+
+    final List<Pet> actual = this.getSut().findPetsByStatus(Arrays.asList("asdas"));
+
+    final Pet pet = actual.get(0);
+    assertThat(pet.getName()).isEqualTo("a");
+
     this.verify();
   }
 
-  // @Test
+  @Test
+  public void findPetsByStatusListMap() {
+    this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "[{\"name\":\"a\"}]");
+
+    final List<Map<String, String>> actual =
+        this.getSut().findPetsByStatusListMap(Arrays.asList("asdas"));
+
+    final Map<String, String> pet = actual.get(0);
+    assertThat(pet.get("name")).isEqualTo("a");
+
+    this.verify();
+  }
+
+  @Test
+  @Ignore
+  public void findPetsByStatusResponseEntity() {
+    this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "[{\"name\":\"a\"}]");
+
+    final ResponseEntity<List<Pet>> actual =
+        this.getSut().findPetsByStatusResponseEntity(Arrays.asList("asdas"));
+
+    assertThat(actual.getBody().get(0).getName()).isEqualTo("a");
+
+    this.verify();
+  }
+
+  @Test
+  @Ignore
   public void findPetsByTags() {
-    this.getSut().findPetsByTags(Arrays.asList("asdas"));
+    this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "[{\"name\":\"a\"}]");
+
+    final ResponseEntity<List<Pet>> actual = this.getSut().findPetsByTags(Arrays.asList("asdas"));
+
+    assertThat(actual.getBody().get(0).getName()).isEqualTo("a");
+
     this.verify();
   }
 
   @Test
   public void getPetById() {
-    this.getSut().getPetById(123L);
+    this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "{\"name\":\"a\"}");
+
+    final ResponseEntity<Pet> actual = this.getSut().getPetById(123L);
+
+    assertThat(actual.getBody().getName()).isEqualTo("a");
     this.verify();
   }
 

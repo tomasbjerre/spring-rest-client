@@ -5,6 +5,7 @@
 package se.bjurr.springresttemplateclient.test.spec.api;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +33,20 @@ public interface PetApi {
       value = "/pet/findByStatus",
       produces = {"application/json"},
       method = RequestMethod.GET)
-  ResponseEntity<List<Pet>> findPetsByStatus(
+  List<Pet> findPetsByStatus(@RequestParam(value = "status", required = true) List<String> status);
+
+  @RequestMapping(
+      value = "/pet/findByStatusListMap",
+      produces = {"application/json"},
+      method = RequestMethod.GET)
+  List<Map<String, String>> findPetsByStatusListMap(
+      @RequestParam(value = "status", required = true) List<String> status);
+
+  @RequestMapping(
+      value = "/pet/findByStatus",
+      produces = {"application/json"},
+      method = RequestMethod.GET)
+  ResponseEntity<List<Pet>> findPetsByStatusResponseEntity(
       @RequestParam(value = "status", required = true) List<String> status);
 
   @RequestMapping(
