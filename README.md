@@ -9,7 +9,10 @@ Given `MyApiInterface` is a Spring-annotated Java interface.
 ```java
 final MyApiInterface myClient = SpringRestTemplateClientBuilder
   .create(MyApiInterface.class)
-  .setUrl("http://...")
+  .setUrl(this.getMockUrl())
+  .setRestTemplate(restTemplate)         // Optional
+  .setHeader("header-name", "the value") // Optional
+  .setHeaders(HttpHeaders)               // Optional
   .build();
 ```
 
