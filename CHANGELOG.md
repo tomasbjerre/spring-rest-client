@@ -2,6 +2,18 @@
 
 Changelog of spring-resttemplate-client.
 
+## [1.0.0](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/1.0.0) (2021-11-08)
+
+### Breaking changes
+
+-  Java 7 compatibile ([7da28](https://github.com/tomasbjerre/spring-resttemplate-client/commit/7da28b3ece2c3a8))  
+
+
+
+
+
+
+
 ## [0.2.2](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/0.2.2) (2021-11-07)
 
 
