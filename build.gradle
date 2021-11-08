@@ -15,15 +15,16 @@ project.ext.buildConfig = [
 ]
 apply from: project.buildscript.classLoader.getResource('main.gradle').toURI()
 
+def springVersion = "4.1.0.RELEASE"
 dependencies {
- compileOnly 'org.springframework:spring-web:4.3.30.RELEASE'
- 
- testImplementation 'org.springframework:spring-web:4.3.30.RELEASE'
- testImplementation 'junit:junit:4.12'
- testImplementation 'org.assertj:assertj-core:2.3.0'
- testImplementation 'org.mockito:mockito-all:1.8.5'
- testImplementation 'com.approvaltests:approvaltests:12.1.1'
- testImplementation 'com.github.tomakehurst:wiremock:2.27.2'
- testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+ compileOnly "org.springframework:spring-web:${springVersion}"
+
+ testImplementation "org.springframework:spring-web:${springVersion}"
+ testImplementation "junit:junit:4.12"
+ testImplementation "org.assertj:assertj-core:2.3.0"
+ testImplementation "org.mockito:mockito-all:1.8.5"
+ testImplementation "com.approvaltests:approvaltests:12.1.1"
+ testImplementation "com.github.tomakehurst:wiremock:2.27.2"
+ testImplementation "com.fasterxml.jackson.core:jackson-databind:2.13.0"
 }
 

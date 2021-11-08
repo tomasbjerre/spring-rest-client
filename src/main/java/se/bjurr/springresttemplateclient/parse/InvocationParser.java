@@ -15,12 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,21 +29,9 @@ public final class InvocationParser {
   private InvocationParser() {}
 
   public static RequestMethod getRequestMethod(final Method method) {
-    if (findAnnotation(method, GetMapping.class).isPresent()) {
-      return RequestMethod.GET;
-    } else if (findAnnotation(method, PostMapping.class).isPresent()) {
-      return RequestMethod.POST;
-    } else if (findAnnotation(method, PutMapping.class).isPresent()) {
-      return RequestMethod.PUT;
-    } else if (findAnnotation(method, DeleteMapping.class).isPresent()) {
-      return RequestMethod.DELETE;
-    } else if (findAnnotation(method, PatchMapping.class).isPresent()) {
-      return RequestMethod.PATCH;
-    } else {
-      final Optional<RequestMapping> requestMapping = findAnnotation(method, RequestMapping.class);
-      if (requestMapping.isPresent()) {
-        return requestMapping.get().method()[0];
-      }
+    final Optional<RequestMapping> requestMapping = findAnnotation(method, RequestMapping.class);
+    if (requestMapping.isPresent()) {
+      return requestMapping.get().method()[0];
     }
     throw new RuntimeException("Cannot find request method of " + method.getName());
   }

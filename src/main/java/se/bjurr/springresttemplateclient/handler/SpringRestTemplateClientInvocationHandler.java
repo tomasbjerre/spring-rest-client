@@ -46,7 +46,7 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
     for (final Entry<String, List<String>> header : invocationDetails.getHeaders().entrySet()) {
       final String[] stringArray = new String[header.getValue().size()];
       for (int i = 0; i < header.getValue().size(); i++) {
-        stringArray[i] = header.getValue().get(i).toString();
+        stringArray[i] = header.getValue().get(i);
       }
       bodyBuilder.header(header.getKey(), stringArray);
     }

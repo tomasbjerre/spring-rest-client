@@ -30,3 +30,4 @@ Supports both signatures:
  * `X deleteOrder(Long)`
 
 See also [test cases](/src/test/java/se/bjurr/springresttemplateclient/test/testcases).
+
