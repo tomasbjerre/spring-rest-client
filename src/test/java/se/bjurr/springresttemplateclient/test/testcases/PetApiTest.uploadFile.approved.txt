@@ -5,7 +5,7 @@
     "Accept" : "application/json",
     "Connection" : "keep-alive",
     "Content-Length" : "10",
-    "Content-Type" : "application/json"
+    "Content-Type" : "application/json;charset=UTF-8"
   },
   "cookies" : { },
   "body" : "\"the file\""

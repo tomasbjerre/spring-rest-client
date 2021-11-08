@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.http.Cookie;
 import com.github.tomakehurst.wiremock.http.RequestMethod;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -24,31 +25,26 @@ public class WiremockInvocation {
   public WiremockInvocation() {}
 
   public static String from(final List<ServeEvent> serveEvent) {
-    final List<WiremockInvocation> wiList =
-        serveEvent.stream()
-            .map(
-                (se) -> {
-                  final WiremockInvocation wi = new WiremockInvocation();
-                  final LoggedRequest request = se.getRequest();
-                  wi.setUrl(
-                      request
-                          .getAbsoluteUrl()
-                          .replaceAll("http://localhost:[0-9]+", "http://localhost:X"));
-                  for (final String header : request.getAllHeaderKeys()) {
-                    if (!Arrays.asList("Host", "User-Agent").contains(header)) {
-                      wi.addHeader(header, request.getHeader(header));
-                    }
-                  }
-                  wi.setBody(request.getBodyAsString());
-                  for (final Entry<String, Cookie> coolie : request.getCookies().entrySet()) {
-                    wi.setCookie(
-                        coolie.getKey(),
-                        coolie.getValue().getValues().stream().collect(Collectors.joining("|")));
-                  }
-                  wi.setMethod(request.getMethod());
-                  return wi;
-                })
-            .collect(Collectors.toList());
+    final List<WiremockInvocation> wiList = new ArrayList<>();
+    for (final ServeEvent se : serveEvent) {
+      final WiremockInvocation wi = new WiremockInvocation();
+      final LoggedRequest request = se.getRequest();
+      wi.setUrl(
+          request.getAbsoluteUrl().replaceAll("http://localhost:[0-9]+", "http://localhost:X"));
+      for (final String header : request.getAllHeaderKeys()) {
+        if (!Arrays.asList("Host", "User-Agent").contains(header)) {
+          wi.addHeader(header, request.getHeader(header));
+        }
+      }
+      wi.setBody(request.getBodyAsString());
+      for (final Entry<String, Cookie> coolie : request.getCookies().entrySet()) {
+        wi.setCookie(
+            coolie.getKey(),
+            coolie.getValue().getValues().stream().collect(Collectors.joining("|")));
+      }
+      wi.setMethod(request.getMethod());
+      wiList.add(wi);
+    }
     try {
       return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(wiList);
     } catch (final JsonProcessingException e) {

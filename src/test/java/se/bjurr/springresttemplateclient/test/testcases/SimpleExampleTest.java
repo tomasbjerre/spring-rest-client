@@ -1,7 +1,9 @@
 package se.bjurr.springresttemplateclient.test.testcases;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import se.bjurr.springresttemplateclient.SpringRestTemplateClientBuilder;
@@ -18,7 +20,9 @@ public class SimpleExampleTest extends BaseApiTest<StoreApi> {
   @Test
   public void testExample() {
     final RestTemplate restTemplate = new RestTemplate();
-    restTemplate.setMessageConverters(Arrays.asList(new MappingJackson2HttpMessageConverter()));
+    final List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+    messageConverters.add(new MappingJackson2HttpMessageConverter());
+    restTemplate.setMessageConverters(messageConverters);
 
     final StoreApi storeApi =
         SpringRestTemplateClientBuilder.create(StoreApi.class)

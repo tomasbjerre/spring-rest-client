@@ -3,6 +3,8 @@ package se.bjurr.springresttemplateclient.handler;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.net.URI;
+import java.util.List;
+import java.util.Map.Entry;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.RequestEntity.BodyBuilder;
@@ -35,12 +37,19 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
         UriComponentsBuilder.fromHttpUrl(this.url) //
             .path(invocationDetails.getRequestDetails().getRequestPath())
             .queryParams(invocationDetails.getQueryParams())
-            .build(invocationDetails.getPathVariables());
+            .buildAndExpand(invocationDetails.getPathVariables())
+            .toUri();
 
     final BodyBuilder bodyBuilder =
         RequestEntity.method(invocationDetails.getRequestDetails().getRequestMethod(), uri);
 
-    bodyBuilder.headers(invocationDetails.getHeaders());
+    for (final Entry<String, List<String>> header : invocationDetails.getHeaders().entrySet()) {
+      final String[] stringArray = new String[header.getValue().size()];
+      for (int i = 0; i < header.getValue().size(); i++) {
+        stringArray[i] = header.getValue().get(i).toString();
+      }
+      bodyBuilder.header(header.getKey(), stringArray);
+    }
 
     if (invocationDetails.getRequestDetails().findConsumes().isPresent()) {
       bodyBuilder.contentType(invocationDetails.getRequestDetails().findConsumes().get());

@@ -9,13 +9,16 @@ buildscript {
   classpath 'se.bjurr.gradle:gradle-scripts:2.+'
  }
 }
+project.ext.buildConfig = [
+ sourceCompatibility: 1.7,
+ targetCompatibility: 1.7,
+]
 apply from: project.buildscript.classLoader.getResource('main.gradle').toURI()
 
-
 dependencies {
- compileOnly 'org.springframework:spring-web:5.3.12'
+ compileOnly 'org.springframework:spring-web:4.3.30.RELEASE'
  
- testImplementation 'org.springframework:spring-web:5.3.12'
+ testImplementation 'org.springframework:spring-web:4.3.30.RELEASE'
  testImplementation 'junit:junit:4.12'
  testImplementation 'org.assertj:assertj-core:2.3.0'
  testImplementation 'org.mockito:mockito-all:1.8.5'
