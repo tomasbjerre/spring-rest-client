@@ -2,6 +2,18 @@
 
 Changelog of spring-resttemplate-client.
 
+## [1.1.0](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/1.1.0) (2021-11-08)
+
+
+
+### Features
+
+-  support Spring 4.1 ([3be38](https://github.com/tomasbjerre/spring-resttemplate-client/commit/3be3880dd00abe7))  
+
+
+
+
+
 ## [1.0.5](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/1.0.5) (2021-11-08)
 
 
