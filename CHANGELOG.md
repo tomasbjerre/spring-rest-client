@@ -2,6 +2,18 @@
 
 Changelog of spring-resttemplate-client.
 
+## [1.0.5](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/1.0.5) (2021-11-08)
+
+
+
+
+
+### Bug Fixes
+
+-  removing spotbugs as runtime dependency ([fac0a](https://github.com/tomasbjerre/spring-resttemplate-client/commit/fac0a0056cebf4e))  
+
+
+
 ## [1.0.0](https://github.com/tomasbjerre/spring-resttemplate-client/releases/tag/1.0.0) (2021-11-08)
 
 ### Breaking changes
