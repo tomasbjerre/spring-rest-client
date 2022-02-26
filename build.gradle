@@ -15,7 +15,7 @@ project.ext.buildConfig = [
 ]
 apply from: project.buildscript.classLoader.getResource('main.gradle').toURI()
 
-def springVersion = "4.1.0.RELEASE"
+def springVersion = "4.3.30.RELEASE"
 dependencies {
  compileOnly "org.springframework:spring-web:${springVersion}"
 
