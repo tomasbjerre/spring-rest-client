@@ -1,8 +1,10 @@
 package se.bjurr.springresttemplateclient.parse;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
@@ -15,15 +17,30 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.bjurr.springresttemplateclient.parse.model.InvocationDetails;
 import se.bjurr.springresttemplateclient.parse.model.RequestDetails;
 
 public final class InvocationParser {
+  private static final Map<Class<?>, RequestMethod> MAPPINGS = new HashMap<>();
+
+  static {
+    MAPPINGS.put(DeleteMapping.class, RequestMethod.DELETE);
+    MAPPINGS.put(GetMapping.class, RequestMethod.GET);
+    MAPPINGS.put(PatchMapping.class, RequestMethod.PATCH);
+    MAPPINGS.put(PostMapping.class, RequestMethod.POST);
+    MAPPINGS.put(PutMapping.class, RequestMethod.PUT);
+  }
 
   private InvocationParser() {}
 
@@ -181,6 +198,53 @@ public final class InvocationParser {
     if (requestMapping.isPresent()) {
       return RequestMappingParser.getRequestDetails(requestMapping.get());
     }
-    throw new RuntimeException("Only RequestMapping is, currently, implemented. PR:s are welcome.");
+    final Optional<RequestMapping> composedOpt =
+        InvocationParser.findComposedRequestMappingAnnotation(method);
+    if (composedOpt.isPresent()) {
+      return RequestMappingParser.getRequestDetails(composedOpt.get());
+    }
+
+    throw new RuntimeException(
+        "Did not find any supported annotation on "
+            + method.getDeclaringClass()
+            + " "
+            + method.getName()
+            + ". Pull requests, or issues, are welcome on GitHub!");
+  }
+
+  private static Optional<RequestMapping> findComposedRequestMappingAnnotation(
+      final Method method) {
+    for (final Entry<Class<?>, RequestMethod> map : MAPPINGS.entrySet()) {
+      final Class<?> composedAnnotationType = map.getKey();
+      final RequestMethod requestMethod = map.getValue();
+      final Optional<?> opt = InvocationParser.findAnnotation(method, composedAnnotationType);
+      if (opt.isPresent()) {
+        final Object composedAnnotationInstance = opt.get();
+        final RequestMapping proxy =
+            createRequestMappingProxy(requestMethod, composedAnnotationInstance);
+        return Optional.of(proxy);
+      }
+    }
+    return Optional.empty();
+  }
+
+  private static RequestMapping createRequestMappingProxy(
+      final RequestMethod requestMethod, final Object composedAnnotationInstance) {
+    final InvocationHandler invocationHandler =
+        new InvocationHandler() {
+          @Override
+          public Object invoke(final Object o, final Method m, final Object[] args)
+              throws Throwable {
+            if (m.getName().equals("method")) {
+              return new RequestMethod[] {requestMethod};
+            }
+            final Method declaredMethod =
+                composedAnnotationInstance.getClass().getDeclaredMethod(m.getName());
+            return declaredMethod.invoke(composedAnnotationInstance, args);
+          }
+        };
+    final Class<?>[] clazz = {RequestMapping.class};
+    return (RequestMapping)
+        Proxy.newProxyInstance(InvocationParser.class.getClassLoader(), clazz, invocationHandler);
   }
 }

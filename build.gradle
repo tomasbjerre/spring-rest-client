@@ -12,6 +12,9 @@ buildscript {
 project.ext.buildConfig = [
  sourceCompatibility: 1.7,
  targetCompatibility: 1.7,
+ staticCodeAnalysis: [
+  maxViolations: 0
+ ]
 ]
 apply from: project.buildscript.classLoader.getResource('main.gradle').toURI()
 

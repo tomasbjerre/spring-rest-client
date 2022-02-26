@@ -6,24 +6,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import se.bjurr.springresttemplateclient.test.composed.spec.model.Product;
 import se.bjurr.springresttemplateclient.test.composed.spec.model.ProductInput;
 
 @RestController
-@RequestMapping("/product")
 public interface ProductApi {
 
-  @GetMapping("/{id}")
-  Product getProduct(@PathVariable String id);
+  @GetMapping("/product/{id}")
+  Product getProduct(@PathVariable("id") String id);
 
-  @DeleteMapping("/{id}")
-  void deleteProduct(@PathVariable String id);
+  @DeleteMapping("/product/{id}")
+  void deleteProduct(@PathVariable("id") String id);
 
-  @PutMapping("/{id}")
-  Product updateProduct(@PathVariable String id, @RequestBody ProductInput input);
+  @PutMapping("/product/{id}")
+  Product updateProduct(@PathVariable("id") String id, @RequestBody ProductInput input);
 
-  @PostMapping
+  @PostMapping("/product")
   Product addProduct(@RequestBody ProductInput input);
 }

@@ -1,5 +1,6 @@
 package se.bjurr.springresttemplateclient.parse;
 
+import java.util.Arrays;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -16,7 +17,9 @@ public class RequestMappingParser {
     final HttpMethod requestMethod = HttpMethod.valueOf(requestMapping.method()[0].name());
 
     if (requestMapping.value().length != 1) {
-      throw new RuntimeException("Only one request path, currently, supported. PR:s are welcome.");
+      throw new RuntimeException(
+          "Only one request path, currently, supported. PR:s are welcome. Found: "
+              + Arrays.toString(requestMapping.value()));
     }
     final String requestPath = requestMapping.value()[0];
 
