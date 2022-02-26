@@ -2,6 +2,18 @@
 
 Changelog of spring-resttemplate-client.
 
+## 1.4.0 (2022-02-26)
+
+
+
+### Features
+
+-  make spring-web api dependency ([f3129](https://github.com/tomasbjerre/spring-resttemplate-client/commit/f31297bd0fc1522) Tomas Bjerre)  
+
+
+
+
+
 ## 1.3.0 (2022-02-26)
 
 
