@@ -1,6 +1,8 @@
 package se.bjurr.springresttemplateclient.parse;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -9,19 +11,32 @@ import se.bjurr.springresttemplateclient.parse.model.RequestDetails;
 
 public class RequestMappingParser {
 
-  public static RequestDetails getRequestDetails(final RequestMapping requestMapping) {
+  public static RequestDetails getRequestDetails(
+      final RequestMapping requestMapping, final RequestMapping classLevelRequestMappingOpt) {
     if (requestMapping.method().length != 1) {
       throw new RuntimeException(
           "Only one request method, currently, supported. PR:s are welcome.");
     }
     final HttpMethod requestMethod = HttpMethod.valueOf(requestMapping.method()[0].name());
 
-    if (requestMapping.value().length != 1) {
-      throw new RuntimeException(
-          "Only one request path, currently, supported. PR:s are welcome. Found: "
-              + Arrays.toString(requestMapping.value()));
+    List<String> pathsOnMethod = getOneOrZeroPaths(requestMapping);
+    if (classLevelRequestMappingOpt != null) {
+      final List<String> pathsOnClassLevel = getOneOrZeroPaths(classLevelRequestMappingOpt);
+      if (pathsOnMethod.isEmpty()) {
+        pathsOnMethod.addAll(pathsOnClassLevel);
+      } else {
+        final List<String> newPaths = new ArrayList<>();
+        for (final String path : pathsOnMethod) {
+          final String concat = pathsOnClassLevel.get(0) + "/" + path;
+          newPaths.add(concat.replaceAll("[/]+", "/"));
+        }
+        pathsOnMethod = newPaths;
+      }
     }
-    final String requestPath = requestMapping.value()[0];
+    if (pathsOnMethod.isEmpty()) {
+      throw new RuntimeException("No request path found: " + pathsOnMethod);
+    }
+    final String requestPath = pathsOnMethod.get(0);
 
     if (requestMapping.consumes().length > 1) {
       throw new RuntimeException(
@@ -54,5 +69,16 @@ public class RequestMappingParser {
     }
 
     return new RequestDetails(requestMethod, requestPath, consumes, produces, httpHeaders);
+  }
+
+  private static List<String> getOneOrZeroPaths(final RequestMapping requestMapping) {
+    final List<String> paths = new ArrayList<>();
+    paths.addAll(Arrays.asList(requestMapping.value()));
+    paths.addAll(Arrays.asList(requestMapping.path()));
+    if (paths.size() > 1) {
+      throw new RuntimeException(
+          "Only one request path, currently, supported. PR:s are welcome. Found: " + paths);
+    }
+    return paths;
   }
 }

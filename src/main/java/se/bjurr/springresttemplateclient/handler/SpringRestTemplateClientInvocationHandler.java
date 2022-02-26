@@ -35,13 +35,17 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
   }
 
   private Object doRequest(final InvocationDetails invocationDetails) {
-    final URI uri =
-        UriComponentsBuilder.fromHttpUrl(this.url) //
-            .path(invocationDetails.getRequestDetails().getRequestPath())
-            .queryParams(invocationDetails.getQueryParams())
-            .buildAndExpand(invocationDetails.getPathVariables())
-            .toUri();
-
+    URI uri = null;
+    try {
+      uri =
+          UriComponentsBuilder.fromHttpUrl(this.url) //
+              .path(invocationDetails.getRequestDetails().getRequestPath())
+              .queryParams(invocationDetails.getQueryParams())
+              .buildAndExpand(invocationDetails.getPathVariables())
+              .toUri();
+    } catch (final IllegalArgumentException e) {
+      throw new RuntimeException(invocationDetails.toString(), e);
+    }
     final BodyBuilder bodyBuilder =
         RequestEntity.method(invocationDetails.getRequestDetails().getRequestMethod(), uri);
 

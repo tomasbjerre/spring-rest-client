@@ -44,6 +44,12 @@ public final class InvocationParser {
 
   private InvocationParser() {}
 
+  public static <T> Optional<T> findAnnotation(
+      final Class<?> clazz, final Class<T> findAnnotation) {
+    final Annotation[] methodAnnotations = clazz.getAnnotations();
+    return findAnnotation(methodAnnotations, findAnnotation);
+  }
+
   public static <T> Optional<T> findAnnotation(final Method method, final Class<T> findAnnotation) {
     final Annotation[] methodAnnotations = method.getAnnotations();
     return findAnnotation(methodAnnotations, findAnnotation);
@@ -77,7 +83,11 @@ public final class InvocationParser {
 
       final PathVariable pv = p.getAnnotation(PathVariable.class);
       if (pv != null) {
-        map.put(pv.value(), args[i].toString());
+        String name = pv.value();
+        if (name.isEmpty()) {
+          name = p.getName();
+        }
+        map.put(name, args[i].toString());
       }
     }
     return map;
@@ -193,15 +203,20 @@ public final class InvocationParser {
   }
 
   private static RequestDetails getRequestDetails(final Method method) {
+    final Optional<RequestMapping> classLevelRequestMappingOpt =
+        InvocationParser.findAnnotation(method.getDeclaringClass(), RequestMapping.class);
+
     final Optional<RequestMapping> requestMapping =
         InvocationParser.findAnnotation(method, RequestMapping.class);
     if (requestMapping.isPresent()) {
-      return RequestMappingParser.getRequestDetails(requestMapping.get());
+      return RequestMappingParser.getRequestDetails(
+          requestMapping.get(), classLevelRequestMappingOpt.orElse(null));
     }
     final Optional<RequestMapping> composedOpt =
         InvocationParser.findComposedRequestMappingAnnotation(method);
     if (composedOpt.isPresent()) {
-      return RequestMappingParser.getRequestDetails(composedOpt.get());
+      return RequestMappingParser.getRequestDetails(
+          composedOpt.get(), classLevelRequestMappingOpt.orElse(null));
     }
 
     throw new RuntimeException(
