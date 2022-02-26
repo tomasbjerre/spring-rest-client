@@ -20,7 +20,7 @@ apply from: project.buildscript.classLoader.getResource('main.gradle').toURI()
 
 def springVersion = "4.3.30.RELEASE"
 dependencies {
- compileOnly "org.springframework:spring-web:${springVersion}"
+ api "org.springframework:spring-web:${springVersion}"
 
  testImplementation "org.springframework:spring-web:${springVersion}"
  testImplementation "junit:junit:4.12"
