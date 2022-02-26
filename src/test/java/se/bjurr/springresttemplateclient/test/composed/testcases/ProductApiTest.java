@@ -1,4 +1,4 @@
-package se.bjurr.springresttemplateclient.test.composed.spec.testcases;
+package se.bjurr.springresttemplateclient.test.composed.testcases;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
