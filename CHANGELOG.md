@@ -2,6 +2,18 @@
 
 Changelog of spring-resttemplate-client.
 
+## 1.3.0 (2022-02-26)
+
+
+
+### Features
+
+-  path on interface level ([60467](https://github.com/tomasbjerre/spring-resttemplate-client/commit/60467b717d9a9c0) Tomas Bjerre)  
+
+
+
+
+
 ## 1.2.0 (2022-02-26)
 
 
