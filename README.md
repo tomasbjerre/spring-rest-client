@@ -2,7 +2,7 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplateclient/spring-resttemplate-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplateclient/spring-resttemplate-client)
 
-Dynamically create Spring RestTemplate (proxy class) client from annotated interface.
+Dynamically create Spring RestTemplate (proxy class) client from annotated interface. Very lightweight, only depends on `spring-web:4.3`, compared to alternatives like [Feign](https://github.com/OpenFeign/feign).
 
 Given `MyApiInterface` is a Spring-annotated Java interface.
 
@@ -26,8 +26,7 @@ The method invocation (`getMyDto()`) on that object (`myClient`) will be transla
 
 Supports both signatures:
 
- * `ResponseEntity<X> deleteOrder(Long)`
- * `X deleteOrder(Long)`
+- `ResponseEntity<X> deleteOrder(Long)`
+- `X deleteOrder(Long)`
 
 See also [test cases](/src/test/java/se/bjurr/springresttemplateclient/test/testcases).
-
