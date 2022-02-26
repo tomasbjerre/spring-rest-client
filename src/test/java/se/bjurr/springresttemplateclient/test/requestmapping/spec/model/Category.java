@@ -1,17 +1,22 @@
-package se.bjurr.springresttemplateclient.test.spec.model;
+package se.bjurr.springresttemplateclient.test.requestmapping.spec.model;
 
 import java.util.Objects;
 
-public class Tag {
+public class Category {
   private Long id = null;
 
   private String name = null;
 
-  public Tag id(final Long id) {
+  public Category id(final Long id) {
     this.id = id;
     return this;
   }
 
+  /**
+   * Get id
+   *
+   * @return id
+   */
   public Long getId() {
     return this.id;
   }
@@ -20,11 +25,16 @@ public class Tag {
     this.id = id;
   }
 
-  public Tag name(final String name) {
+  public Category name(final String name) {
     this.name = name;
     return this;
   }
 
+  /**
+   * Get name
+   *
+   * @return name
+   */
   public String getName() {
     return this.name;
   }
@@ -41,8 +51,8 @@ public class Tag {
     if (o == null || this.getClass() != o.getClass()) {
       return false;
     }
-    final Tag tag = (Tag) o;
-    return Objects.equals(this.id, tag.id) && Objects.equals(this.name, tag.name);
+    final Category category = (Category) o;
+    return Objects.equals(this.id, category.id) && Objects.equals(this.name, category.name);
   }
 
   @Override
@@ -53,7 +63,7 @@ public class Tag {
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class Category {\n");
 
     sb.append("    id: ").append(this.toIndentedString(this.id)).append("\n");
     sb.append("    name: ").append(this.toIndentedString(this.name)).append("\n");

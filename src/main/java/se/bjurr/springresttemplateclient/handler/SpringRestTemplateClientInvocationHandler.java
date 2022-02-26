@@ -17,11 +17,13 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
 
   private final String url;
   private final RestTemplate restTemplate;
+  private final HttpHeaders headers;
 
   public SpringRestTemplateClientInvocationHandler(
       final String url, final RestTemplate restTemplate, final HttpHeaders headers) {
     this.url = url;
     this.restTemplate = restTemplate;
+    this.headers = headers;
   }
 
   @Override
@@ -61,9 +63,9 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
 
     RequestEntity<?> requestEntity;
     if (invocationDetails.findRequestBody().isPresent()) {
-      requestEntity = bodyBuilder.body(invocationDetails.findRequestBody().get());
+      requestEntity = this.headers(bodyBuilder).body(invocationDetails.findRequestBody().get());
     } else {
-      requestEntity = bodyBuilder.build();
+      requestEntity = this.headers(bodyBuilder).build();
     }
 
     if (invocationDetails.isMethodReurnTypeResponseEntity()) {
@@ -73,5 +75,15 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
           .exchange(requestEntity, invocationDetails.getResponseType())
           .getBody();
     }
+  }
+
+  private BodyBuilder headers(final BodyBuilder bodyBuilder) {
+    for (final Entry<String, List<String>> header : this.headers.entrySet()) {
+      for (final String value : header.getValue()) {
+        final String headerName = header.getKey();
+        bodyBuilder.header(headerName, value);
+      }
+    }
+    return bodyBuilder;
   }
 }

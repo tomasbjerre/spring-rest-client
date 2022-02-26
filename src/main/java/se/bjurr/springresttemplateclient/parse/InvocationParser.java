@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.bjurr.springresttemplateclient.parse.model.InvocationDetails;
 import se.bjurr.springresttemplateclient.parse.model.RequestDetails;
@@ -27,14 +26,6 @@ import se.bjurr.springresttemplateclient.parse.model.RequestDetails;
 public final class InvocationParser {
 
   private InvocationParser() {}
-
-  public static RequestMethod getRequestMethod(final Method method) {
-    final Optional<RequestMapping> requestMapping = findAnnotation(method, RequestMapping.class);
-    if (requestMapping.isPresent()) {
-      return requestMapping.get().method()[0];
-    }
-    throw new RuntimeException("Cannot find request method of " + method.getName());
-  }
 
   public static <T> Optional<T> findAnnotation(final Method method, final Class<T> findAnnotation) {
     final Annotation[] methodAnnotations = method.getAnnotations();

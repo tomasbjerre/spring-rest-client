@@ -1,4 +1,4 @@
-package se.bjurr.springresttemplateclient.test.spec.model;
+package se.bjurr.springresttemplateclient.test.requestmapping.spec.model;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;

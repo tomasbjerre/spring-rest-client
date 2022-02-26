@@ -1,4 +1,4 @@
-package se.bjurr.springresttemplateclient.test.testcases;
+package se.bjurr.springresttemplateclient.test.requestmapping.testcases;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import se.bjurr.springresttemplateclient.test.spec.api.UserApi;
-import se.bjurr.springresttemplateclient.test.spec.model.User;
+import se.bjurr.springresttemplateclient.test.requestmapping.spec.api.UserApi;
+import se.bjurr.springresttemplateclient.test.requestmapping.spec.model.User;
 import se.bjurr.springresttemplateclient.test.utils.BaseApiTest;
 
 public class UserApiTest extends BaseApiTest<UserApi> {

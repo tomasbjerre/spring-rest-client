@@ -1,4 +1,4 @@
-package se.bjurr.springresttemplateclient.test.testcases;
+package se.bjurr.springresttemplateclient.test.requestmapping.testcases;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import se.bjurr.springresttemplateclient.SpringRestTemplateClientBuilder;
-import se.bjurr.springresttemplateclient.test.spec.api.StoreApi;
+import se.bjurr.springresttemplateclient.test.requestmapping.spec.api.StoreApi;
 import se.bjurr.springresttemplateclient.test.utils.BaseApiTest;
 
 public class SimpleExampleTest extends BaseApiTest<StoreApi> {

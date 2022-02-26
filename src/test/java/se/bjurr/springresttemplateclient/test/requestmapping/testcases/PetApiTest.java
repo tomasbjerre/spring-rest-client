@@ -1,4 +1,4 @@
-package se.bjurr.springresttemplateclient.test.testcases;
+package se.bjurr.springresttemplateclient.test.requestmapping.testcases;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,9 +8,9 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import se.bjurr.springresttemplateclient.test.spec.api.PetApi;
-import se.bjurr.springresttemplateclient.test.spec.model.Category;
-import se.bjurr.springresttemplateclient.test.spec.model.Pet;
+import se.bjurr.springresttemplateclient.test.requestmapping.spec.api.PetApi;
+import se.bjurr.springresttemplateclient.test.requestmapping.spec.model.Category;
+import se.bjurr.springresttemplateclient.test.requestmapping.spec.model.Pet;
 import se.bjurr.springresttemplateclient.test.utils.BaseApiTest;
 
 public class PetApiTest extends BaseApiTest<PetApi> {

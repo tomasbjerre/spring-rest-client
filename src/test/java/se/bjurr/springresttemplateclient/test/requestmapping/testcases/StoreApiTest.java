@@ -1,12 +1,12 @@
-package se.bjurr.springresttemplateclient.test.testcases;
+package se.bjurr.springresttemplateclient.test.requestmapping.testcases;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 import org.junit.Test;
 import org.springframework.http.MediaType;
-import se.bjurr.springresttemplateclient.test.spec.api.StoreApi;
-import se.bjurr.springresttemplateclient.test.spec.model.Order;
+import se.bjurr.springresttemplateclient.test.requestmapping.spec.api.StoreApi;
+import se.bjurr.springresttemplateclient.test.requestmapping.spec.model.Order;
 import se.bjurr.springresttemplateclient.test.utils.BaseApiTest;
 
 public class StoreApiTest extends BaseApiTest<StoreApi> {
