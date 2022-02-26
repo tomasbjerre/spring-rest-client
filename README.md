@@ -29,4 +29,4 @@ Supports both signatures:
 - `ResponseEntity<X> deleteOrder(Long)`
 - `X deleteOrder(Long)`
 
-See also [test cases](/src/test/java/se/bjurr/springresttemplateclient/test/testcases).
+See also [test cases](/src/test/java/se/bjurr/springresttemplateclient/test).

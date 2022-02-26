@@ -11,7 +11,7 @@ public final class SpringRestTemplateClientBuilder {
   public static class Builder<T> {
     private final Class<T> api;
     private RestTemplate restTemplate = new RestTemplate();
-    private HttpHeaders headers = new HttpHeaders();
+    private HttpHeaders unspecifiedHeaders = new HttpHeaders();
     private String url;
 
     public Builder(final Class<T> api) {
@@ -32,12 +32,12 @@ public final class SpringRestTemplateClientBuilder {
     }
 
     public Builder<T> setHeaders(final HttpHeaders headers) {
-      this.headers = headers;
+      this.unspecifiedHeaders = headers;
       return this;
     }
 
     public Builder<T> setHeader(final String headerName, final String headerValue) {
-      this.headers.add(headerName, headerValue);
+      this.unspecifiedHeaders.add(headerName, headerValue);
       return this;
     }
 
@@ -48,7 +48,7 @@ public final class SpringRestTemplateClientBuilder {
       }
       final SpringRestTemplateClientInvocationHandler<T> invocationHandler =
           new SpringRestTemplateClientInvocationHandler<>(
-              this.url, this.restTemplate, this.headers);
+              this.url, this.restTemplate, this.unspecifiedHeaders);
 
       return (T)
           Proxy.newProxyInstance(

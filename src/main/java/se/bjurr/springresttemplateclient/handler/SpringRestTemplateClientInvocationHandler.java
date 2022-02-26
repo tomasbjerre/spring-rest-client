@@ -17,13 +17,13 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
 
   private final String url;
   private final RestTemplate restTemplate;
-  private final HttpHeaders headers;
+  private final HttpHeaders unspecifiedHeaders;
 
   public SpringRestTemplateClientInvocationHandler(
-      final String url, final RestTemplate restTemplate, final HttpHeaders headers) {
+      final String url, final RestTemplate restTemplate, final HttpHeaders unspecifiedHeaders) {
     this.url = url;
     this.restTemplate = restTemplate;
-    this.headers = headers;
+    this.unspecifiedHeaders = unspecifiedHeaders;
   }
 
   @Override
@@ -67,9 +67,10 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
 
     RequestEntity<?> requestEntity;
     if (invocationDetails.findRequestBody().isPresent()) {
-      requestEntity = this.headers(bodyBuilder).body(invocationDetails.findRequestBody().get());
+      requestEntity =
+          this.addUnspecifiedHeaders(bodyBuilder).body(invocationDetails.findRequestBody().get());
     } else {
-      requestEntity = this.headers(bodyBuilder).build();
+      requestEntity = this.addUnspecifiedHeaders(bodyBuilder).build();
     }
 
     if (invocationDetails.isMethodReurnTypeResponseEntity()) {
@@ -81,8 +82,8 @@ public class SpringRestTemplateClientInvocationHandler<T> implements InvocationH
     }
   }
 
-  private BodyBuilder headers(final BodyBuilder bodyBuilder) {
-    for (final Entry<String, List<String>> header : this.headers.entrySet()) {
+  private BodyBuilder addUnspecifiedHeaders(final BodyBuilder bodyBuilder) {
+    for (final Entry<String, List<String>> header : this.unspecifiedHeaders.entrySet()) {
       for (final String value : header.getValue()) {
         final String headerName = header.getKey();
         bodyBuilder.header(headerName, value);
