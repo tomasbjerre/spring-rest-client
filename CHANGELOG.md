@@ -2,6 +2,15 @@
 
 Changelog of spring-resttemplate-client.
 
+## 1.4.1 (2022-03-04)
+
+
+
+
+
+
+
+
 ## 1.4.0 (2022-02-26)
 
 
