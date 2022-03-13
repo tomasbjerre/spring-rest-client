@@ -1,13 +1,13 @@
-# Spring RestTemplate Client
+# Spring Rest Client
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplateclient/spring-resttemplate-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplateclient/spring-resttemplate-client)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplateclient/spring-rest-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springresttemplateclient/spring-rest-client)
 
 Dynamically create Spring RestTemplate (proxy class) client from annotated interface. Very lightweight, only depends on `spring-web:4.3`, compared to alternatives like [Feign](https://github.com/OpenFeign/feign).
 
 Given `MyApiInterface` is a Spring-annotated Java interface.
 
 ```java
-final MyApiInterface myClient = SpringRestTemplateClientBuilder
+final MyApiInterface myClient = SpringRestClientBuilder
   .create(MyApiInterface.class)
   .setUrl(this.getMockUrl())
   .setRestTemplate(restTemplate)         // Optional
