@@ -2,7 +2,7 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springrestclient/spring-rest-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springrestclient/spring-rest-client)
 
-Dynamically create Spring RestTemplate (proxy class) client from annotated interface. Very lightweight, only depends on `spring-web:4.3`, compared to alternatives like [Feign](https://github.com/OpenFeign/feign).
+Dynamically create Spring (proxy class) client from annotated interface. Very lightweight, only depends on `spring-web:4.3`, compared to alternatives like [Feign](https://github.com/OpenFeign/feign).
 
 Given `MyApiInterface` is a Spring-annotated Java interface.
 
