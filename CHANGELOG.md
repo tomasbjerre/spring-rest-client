@@ -1,6 +1,6 @@
-# spring-resttemplate-client changelog
+# spring-rest-client changelog
 
-Changelog of spring-resttemplate-client.
+Changelog of spring-rest-client.
 
 ## 1.4.3 (2022-03-13)
 
@@ -10,7 +10,7 @@ Changelog of spring-resttemplate-client.
 
 ### Bug Fixes
 
--  renaming to Spring Rest Client ([907c6](https://github.com/tomasbjerre/spring-resttemplate-client/commit/907c66542f9af28) Tomas Bjerre)  
+-  renaming to Spring Rest Client ([907c6](https://github.com/tomasbjerre/spring-rest-client/commit/907c66542f9af28) Tomas Bjerre)  
 
 
 
@@ -22,7 +22,7 @@ Changelog of spring-resttemplate-client.
 
 ### Bug Fixes
 
--  renaming to Spring Rest Client ([91929](https://github.com/tomasbjerre/spring-resttemplate-client/commit/91929d7105c4267) Tomas Bjerre)  
+-  renaming to Spring Rest Client ([91929](https://github.com/tomasbjerre/spring-rest-client/commit/91929d7105c4267) Tomas Bjerre)  
 
 
 
@@ -41,7 +41,7 @@ Changelog of spring-resttemplate-client.
 
 ### Features
 
--  make spring-web api dependency ([f3129](https://github.com/tomasbjerre/spring-resttemplate-client/commit/f31297bd0fc1522) Tomas Bjerre)  
+-  make spring-web api dependency ([f3129](https://github.com/tomasbjerre/spring-rest-client/commit/f31297bd0fc1522) Tomas Bjerre)  
 
 
 
@@ -53,7 +53,7 @@ Changelog of spring-resttemplate-client.
 
 ### Features
 
--  path on interface level ([60467](https://github.com/tomasbjerre/spring-resttemplate-client/commit/60467b717d9a9c0) Tomas Bjerre)  
+-  path on interface level ([60467](https://github.com/tomasbjerre/spring-rest-client/commit/60467b717d9a9c0) Tomas Bjerre)  
 
 
 
@@ -65,7 +65,7 @@ Changelog of spring-resttemplate-client.
 
 ### Features
 
--  including headers ([68e48](https://github.com/tomasbjerre/spring-resttemplate-client/commit/68e482b982a3a4b) Tomas Bjerre)  
+-  including headers ([68e48](https://github.com/tomasbjerre/spring-rest-client/commit/68e482b982a3a4b) Tomas Bjerre)  
 
 
 
@@ -77,7 +77,7 @@ Changelog of spring-resttemplate-client.
 
 ### Features
 
--  support Spring 4.1 ([3be38](https://github.com/tomasbjerre/spring-resttemplate-client/commit/3be3880dd00abe7) Tomas Bjerre)  
+-  support Spring 4.1 ([3be38](https://github.com/tomasbjerre/spring-rest-client/commit/3be3880dd00abe7) Tomas Bjerre)  
 
 
 
@@ -91,7 +91,7 @@ Changelog of spring-resttemplate-client.
 
 ### Bug Fixes
 
--  removing spotbugs as runtime dependency ([fac0a](https://github.com/tomasbjerre/spring-resttemplate-client/commit/fac0a0056cebf4e) Tomas Bjerre)  
+-  removing spotbugs as runtime dependency ([fac0a](https://github.com/tomasbjerre/spring-rest-client/commit/fac0a0056cebf4e) Tomas Bjerre)  
 
 
 
@@ -99,7 +99,7 @@ Changelog of spring-resttemplate-client.
 
 ### Breaking changes
 
--  Java 7 compatibile ([7da28](https://github.com/tomasbjerre/spring-resttemplate-client/commit/7da28b3ece2c3a8) Tomas Bjerre)  
+-  Java 7 compatibile ([7da28](https://github.com/tomasbjerre/spring-rest-client/commit/7da28b3ece2c3a8) Tomas Bjerre)  
 
 
 
@@ -115,7 +115,7 @@ Changelog of spring-resttemplate-client.
 
 ### Bug Fixes
 
--  ResponseEntity<List<X>> ([53b8d](https://github.com/tomasbjerre/spring-resttemplate-client/commit/53b8d19615a89d1) Tomas Bjerre)  
+-  ResponseEntity<List<X>> ([53b8d](https://github.com/tomasbjerre/spring-rest-client/commit/53b8d19615a89d1) Tomas Bjerre)  
 
 
 
@@ -127,7 +127,7 @@ Changelog of spring-resttemplate-client.
 
 ### Bug Fixes
 
--  Response<List<X>> ([eac80](https://github.com/tomasbjerre/spring-resttemplate-client/commit/eac80b520f40f0c) Tomas Bjerre)  
+-  Response<List<X>> ([eac80](https://github.com/tomasbjerre/spring-rest-client/commit/eac80b520f40f0c) Tomas Bjerre)  
 
 
 
@@ -137,7 +137,7 @@ Changelog of spring-resttemplate-client.
 
 ### Features
 
--  headers ([55399](https://github.com/tomasbjerre/spring-resttemplate-client/commit/55399d586e82eca) Tomas Bjerre)  
+-  headers ([55399](https://github.com/tomasbjerre/spring-rest-client/commit/55399d586e82eca) Tomas Bjerre)  
 
 
 
@@ -149,7 +149,7 @@ Changelog of spring-resttemplate-client.
 
 ### Features
 
--  query params ([1b3ba](https://github.com/tomasbjerre/spring-resttemplate-client/commit/1b3bac7d6fe4044) Tomas Bjerre)  
+-  query params ([1b3ba](https://github.com/tomasbjerre/spring-rest-client/commit/1b3bac7d6fe4044) Tomas Bjerre)  
 
 
 
@@ -168,6 +168,6 @@ Changelog of spring-resttemplate-client.
 **init**
 
 
-[f3330](https://github.com/tomasbjerre/spring-resttemplate-client/commit/f3330ade6bcf13f) Tomas Bjerre *2021-11-06 19:49:21*
+[f3330](https://github.com/tomasbjerre/spring-rest-client/commit/f3330ade6bcf13f) Tomas Bjerre *2021-11-06 19:49:21*
 
 
