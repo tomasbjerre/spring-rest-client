@@ -2,6 +2,18 @@
 
 Changelog of spring-resttemplate-client.
 
+## 1.4.3 (2022-03-13)
+
+
+
+
+
+### Bug Fixes
+
+-  renaming to Spring Rest Client ([907c6](https://github.com/tomasbjerre/spring-resttemplate-client/commit/907c66542f9af28) Tomas Bjerre)  
+
+
+
 ## 1.4.2 (2022-03-13)
 
 
