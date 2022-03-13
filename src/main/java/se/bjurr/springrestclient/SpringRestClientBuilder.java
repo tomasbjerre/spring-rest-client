@@ -56,11 +56,11 @@ public final class SpringRestClientBuilder {
     }
   }
 
-  public static <T> Builder<T> springRestTemplateClientBuilder(final Class<T> clazz) {
+  public static <T> Builder<T> springRestClientBuilder(final Class<T> clazz) {
     return new Builder<>(clazz);
   }
 
   public static <T> Builder<T> create(final Class<T> clazz) {
-    return springRestTemplateClientBuilder(clazz);
+    return springRestClientBuilder(clazz);
   }
 }
