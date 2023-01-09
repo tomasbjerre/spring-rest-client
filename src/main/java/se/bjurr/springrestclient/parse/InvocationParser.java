@@ -103,8 +103,7 @@ public final class InvocationParser {
       if (rp != null) {
         final Object arg = args[i];
         if (arg == null) {
-          // Do nothing.
-          // map.add(rp.value(), null);
+          // Do nothing, ignore.
         } else if (arg instanceof List) {
           @SuppressWarnings("unchecked")
           final List<Object> arr = (List<Object>) arg;
