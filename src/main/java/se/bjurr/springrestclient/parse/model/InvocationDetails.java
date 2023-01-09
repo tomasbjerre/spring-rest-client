@@ -12,7 +12,7 @@ public class InvocationDetails {
   private final MultiValueMap<String, String> queryParams;
   private final Map<String, String> pathVariables;
   private final Object requestBody;
-  private final boolean methodReurnTypeIsResponseEntity;
+  private final boolean methodReturnTypeIsResponseEntity;
   private final ParameterizedTypeReference<?> responseType;
   private final HttpHeaders headers;
 
@@ -21,14 +21,14 @@ public class InvocationDetails {
       final MultiValueMap<String, String> queryParams,
       final Map<String, String> pathVariables,
       final Object requestBody,
-      final boolean methodReurnTypeIsResponseEntity,
+      final boolean methodReturnTypeIsResponseEntity,
       final ParameterizedTypeReference<?> responseType,
       final HttpHeaders headers) {
     this.requestDetails = requestDetails;
     this.queryParams = queryParams;
     this.pathVariables = pathVariables;
     this.requestBody = requestBody;
-    this.methodReurnTypeIsResponseEntity = methodReurnTypeIsResponseEntity;
+    this.methodReturnTypeIsResponseEntity = methodReturnTypeIsResponseEntity;
     this.responseType = responseType;
     this.headers = headers;
   }
@@ -57,8 +57,8 @@ public class InvocationDetails {
     return this.responseType;
   }
 
-  public boolean isMethodReurnTypeResponseEntity() {
-    return this.methodReurnTypeIsResponseEntity;
+  public boolean isMethodReturnTypeResponseEntity() {
+    return this.methodReturnTypeIsResponseEntity;
   }
 
   @Override
@@ -71,8 +71,8 @@ public class InvocationDetails {
         + this.pathVariables
         + ", requestBody="
         + this.requestBody
-        + ", methodReurnTypeIsResponseEntity="
-        + this.methodReurnTypeIsResponseEntity
+        + ", methodReturnTypeIsResponseEntity="
+        + this.methodReturnTypeIsResponseEntity
         + ", responseType="
         + this.responseType
         + ", headers="

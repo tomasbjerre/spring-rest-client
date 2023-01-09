@@ -30,3 +30,5 @@ dependencies {
  testImplementation "com.github.tomakehurst:wiremock:2.27.2"
  testImplementation "com.fasterxml.jackson.core:jackson-databind:2.13.0"
 }
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8

@@ -102,7 +102,10 @@ public final class InvocationParser {
       final RequestParam rp = p.getAnnotation(RequestParam.class);
       if (rp != null) {
         final Object arg = args[i];
-        if (arg instanceof List) {
+        if (arg == null) {
+          // Do nothing.
+          // map.add(rp.value(), null);
+        } else if (arg instanceof List) {
           @SuppressWarnings("unchecked")
           final List<Object> arr = (List<Object>) arg;
           for (final Object element : arr) {
@@ -134,7 +137,7 @@ public final class InvocationParser {
     return map;
   }
 
-  public static Optional<Object> findReqestBody(final Method method, final Object[] args) {
+  public static Optional<Object> findRequestBody(final Method method, final Object[] args) {
     for (int i = 0; i < method.getParameterCount(); i++) {
       final Parameter p = method.getParameters()[i];
       final RequestBody rb = p.getAnnotation(RequestBody.class);
@@ -159,7 +162,7 @@ public final class InvocationParser {
 
     final Map<String, String> pathVariables = InvocationParser.getPathVariables(method, args);
 
-    final Optional<Object> requestBody = InvocationParser.findReqestBody(method, args);
+    final Optional<Object> requestBody = InvocationParser.findRequestBody(method, args);
 
     final boolean methodReurnTypeIsResponseEntity =
         method.getReturnType().isAssignableFrom(ResponseEntity.class);
