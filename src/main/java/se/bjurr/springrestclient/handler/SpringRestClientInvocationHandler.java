@@ -73,7 +73,7 @@ public class SpringRestClientInvocationHandler<T> implements InvocationHandler {
       requestEntity = this.addUnspecifiedHeaders(bodyBuilder).build();
     }
 
-    if (invocationDetails.isMethodReurnTypeResponseEntity()) {
+    if (invocationDetails.isMethodReturnTypeResponseEntity()) {
       return this.restTemplate.exchange(requestEntity, invocationDetails.getResponseType());
     } else {
       return this.restTemplate

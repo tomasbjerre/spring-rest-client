@@ -17,3 +17,5 @@ classes
 
 /.nb-gradle/
 *.received.txt
+
+.tool-versions
