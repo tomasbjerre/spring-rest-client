@@ -2,6 +2,8 @@
 
 Changelog of spring-rest-client.
 
+## 1.4.5 (2023-04-03)
+
 ## 1.4.4 (2023-01-09)
 
 ### Bug Fixes
