@@ -1,3 +1,9 @@
+## 1.5.0 (2025-01-22)
+
+### Features
+
+-  code cleanup ([21ba3](https://github.com/tomasbjerre/spring-rest-client/commit/21ba36b3338fd2d) Tomas Bjerre)  
+
 # spring-rest-client changelog
 
 Changelog of spring-rest-client.
