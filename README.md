@@ -24,6 +24,8 @@ final ResponseEntity<MyDTO> response = myClient.getMyDto();
 
 The method invocation (`getMyDto()`) on that object (`myClient`) will be translated to a HTTP request using the annotations of that method in that interface. And `response` will be the result of that HTTP request.
 
+Supports both `RequestMapping`, like `@RequestMapping(value = "/doget/{theId}", method = RequestMethod.GET)`, and composed format, like `@GetMapping("/doget/{theId}")`.
+
 Supports both signatures:
 
 - `ResponseEntity<X> deleteOrder(Long)`

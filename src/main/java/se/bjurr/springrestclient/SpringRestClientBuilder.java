@@ -52,7 +52,9 @@ public final class SpringRestClientBuilder {
 
       return (T)
           Proxy.newProxyInstance(
-              this.api.getClassLoader(), new Class[] {this.api}, invocationHandler);
+              Thread.currentThread().getContextClassLoader(),
+              new Class[] {this.api},
+              invocationHandler);
     }
   }
 

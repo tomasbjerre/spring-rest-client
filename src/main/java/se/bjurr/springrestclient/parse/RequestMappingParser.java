@@ -17,7 +17,6 @@ public class RequestMappingParser {
       throw new RuntimeException(
           "Only one request method, currently, supported. PR:s are welcome.");
     }
-    final HttpMethod requestMethod = HttpMethod.valueOf(requestMapping.method()[0].name());
 
     List<String> pathsOnMethod = getOneOrZeroPaths(requestMapping);
     if (classLevelRequestMappingOpt != null) {
@@ -36,8 +35,6 @@ public class RequestMappingParser {
     if (pathsOnMethod.isEmpty()) {
       throw new RuntimeException("No request path found: " + pathsOnMethod);
     }
-    final String requestPath = pathsOnMethod.get(0);
-
     if (requestMapping.consumes().length > 1) {
       throw new RuntimeException(
           "Only one, or zero, consumes, currently, supported. PR:s are welcome.");
@@ -68,6 +65,8 @@ public class RequestMappingParser {
       httpHeaders.add(spitted[0], spitted[1]);
     }
 
+    final String requestPath = pathsOnMethod.get(0);
+    final HttpMethod requestMethod = HttpMethod.valueOf(requestMapping.method()[0].name());
     return new RequestDetails(requestMethod, requestPath, consumes, produces, httpHeaders);
   }
 

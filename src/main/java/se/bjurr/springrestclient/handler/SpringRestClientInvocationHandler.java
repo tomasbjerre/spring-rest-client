@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.List;
 import java.util.Map.Entry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.RequestEntity.BodyBuilder;
@@ -14,6 +16,8 @@ import se.bjurr.springrestclient.parse.InvocationParser;
 import se.bjurr.springrestclient.parse.model.InvocationDetails;
 
 public class SpringRestClientInvocationHandler<T> implements InvocationHandler {
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(SpringRestClientInvocationHandler.class);
 
   private final String url;
   private final RestTemplate restTemplate;
@@ -35,7 +39,10 @@ public class SpringRestClientInvocationHandler<T> implements InvocationHandler {
   }
 
   private Object doRequest(final InvocationDetails invocationDetails) {
-    URI uri = null;
+    if (LOGGER.isDebugEnabled()) {
+      LOGGER.debug("Invoking with: " + invocationDetails);
+    }
+    URI uri;
     try {
       uri =
           UriComponentsBuilder.fromHttpUrl(this.url) //

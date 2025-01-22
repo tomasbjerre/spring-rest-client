@@ -75,7 +75,7 @@ public final class InvocationParser {
     return requestMapping.get();
   }
 
-  public static Map<String, String> getPathVariables(final Method method, final Object[] args) {
+  public static Map<String, String> getPathVariables(final Method method, final Object... args) {
     final Map<String, String> map = new HashMap<>();
 
     for (int i = 0; i < method.getParameterCount(); i++) {
@@ -94,7 +94,7 @@ public final class InvocationParser {
   }
 
   public static MultiValueMap<String, String> getRequestVariables(
-      final Method method, final Object[] args) {
+      final Method method, final Object... args) {
     final MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
     for (int i = 0; i < method.getParameterCount(); i++) {
       final Parameter p = method.getParameters()[i];
@@ -102,21 +102,21 @@ public final class InvocationParser {
       final RequestParam rp = p.getAnnotation(RequestParam.class);
       if (rp != null) {
         final Object arg = args[i];
-        if (arg == null) {
-          // Do nothing, ignore.
-        } else if (arg instanceof List) {
-          @SuppressWarnings("unchecked")
-          final List<Object> arr = (List<Object>) arg;
-          for (final Object element : arr) {
-            map.add(rp.value(), element.toString());
+        if (arg != null) {
+          if (arg instanceof List) {
+            @SuppressWarnings("unchecked")
+            final List<Object> arr = (List<Object>) arg;
+            for (final Object element : arr) {
+              map.add(rp.value(), element.toString());
+            }
+          } else if (arg.getClass().isArray()) {
+            final Object[] arr = (Object[]) arg;
+            for (final Object element : arr) {
+              map.add(rp.value(), element.toString());
+            }
+          } else {
+            map.add(rp.value(), args[i].toString());
           }
-        } else if (arg.getClass().isArray()) {
-          final Object[] arr = (Object[]) arg;
-          for (final Object element : arr) {
-            map.add(rp.value(), element.toString());
-          }
-        } else {
-          map.add(rp.value(), args[i].toString());
         }
       }
     }
@@ -124,7 +124,7 @@ public final class InvocationParser {
   }
 
   private static MultiValueMap<String, String> getHeaderVariables(
-      final Method method, final Object[] args) {
+      final Method method, final Object... args) {
     final MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
     for (int i = 0; i < method.getParameterCount(); i++) {
       final Parameter p = method.getParameters()[i];
@@ -136,7 +136,7 @@ public final class InvocationParser {
     return map;
   }
 
-  public static Optional<Object> findRequestBody(final Method method, final Object[] args) {
+  public static Optional<Object> findRequestBody(final Method method, final Object... args) {
     for (int i = 0; i < method.getParameterCount(); i++) {
       final Parameter p = method.getParameters()[i];
       final RequestBody rb = p.getAnnotation(RequestBody.class);
@@ -153,7 +153,7 @@ public final class InvocationParser {
   }
 
   public static InvocationDetails getInvocationDetails(
-      final Object proxy, final Method method, final Object[] args) throws ClassNotFoundException {
+      final Object proxy, final Method method, final Object... args) throws ClassNotFoundException {
     final RequestDetails requestDetails = getRequestDetails(method);
 
     final MultiValueMap<String, String> queryParams =
@@ -166,7 +166,7 @@ public final class InvocationParser {
     final boolean methodReurnTypeIsResponseEntity =
         method.getReturnType().isAssignableFrom(ResponseEntity.class);
 
-    ParameterizedTypeReference<?> responseType = null;
+    ParameterizedTypeReference<?> responseType;
     if (methodReurnTypeIsResponseEntity) {
       responseType =
           new ParameterizedTypeReference<Type>() {
@@ -262,6 +262,7 @@ public final class InvocationParser {
         };
     final Class<?>[] clazz = {RequestMapping.class};
     return (RequestMapping)
-        Proxy.newProxyInstance(InvocationParser.class.getClassLoader(), clazz, invocationHandler);
+        Proxy.newProxyInstance(
+            Thread.currentThread().getContextClassLoader(), clazz, invocationHandler);
   }
 }
