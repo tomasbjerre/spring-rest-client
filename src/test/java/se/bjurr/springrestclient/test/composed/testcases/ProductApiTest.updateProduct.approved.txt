@@ -1,11 +1,14 @@
 [ {
   "url" : "http://localhost:X/product/1",
-  "method" : "PUT",
+  "method" : {
+    "name" : "PUT",
+    "expected" : "PUT"
+  },
   "headers" : {
     "Accept" : "application/json, application/*+json",
     "Connection" : "keep-alive",
-    "Content-Length" : "8",
-    "Content-Type" : "application/json;charset=UTF-8"
+    "Content-Type" : "application/json",
+    "Transfer-Encoding" : "chunked"
   },
   "cookies" : { },
   "body" : "{\"id\":2}"

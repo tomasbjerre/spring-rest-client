@@ -1,6 +1,9 @@
 [ {
   "url" : "http://localhost:X/pet/123",
-  "method" : "GET",
+  "method" : {
+    "name" : "GET",
+    "expected" : "GET"
+  },
   "headers" : {
     "Accept" : "application/json",
     "Connection" : "keep-alive"

@@ -1,18 +1,22 @@
 plugins {
-	id "se.bjurr.gradle.bundle-jar" version "1.+"
+	id "se.bjurr.gradle.bundle-jar" version "2.0.0-SNAPSHOT"
 }
 
-def springVersion = "4.3.30.RELEASE"
+def springVersion = "7.0.1"
+
 dependencies {
 	api "org.springframework:spring-web:${springVersion}"
-	implementation "org.slf4j:slf4j-api:2.0.16"
+	implementation "org.slf4j:slf4j-api:2.0.17"
 
 	testImplementation "org.springframework:spring-web:${springVersion}"
-	testImplementation "junit:junit:4.12"
-	testImplementation "org.assertj:assertj-core:2.3.0"
-	testImplementation "org.mockito:mockito-all:1.8.5"
-	testImplementation "com.approvaltests:approvaltests:12.1.1"
-	testImplementation "com.github.tomakehurst:wiremock:2.27.2"
-	testImplementation "com.fasterxml.jackson.core:jackson-databind:2.13.0"
-	testImplementation "org.slf4j:slf4j-simple:2.0.16"
+	testImplementation "org.springframework:spring-test:${springVersion}"
+	testImplementation "org.junit.jupiter:junit-jupiter:6.0.1"
+	testImplementation "org.assertj:assertj-core:3.27.6"
+	testImplementation "org.mockito:mockito-core:5.20.0"
+	testImplementation "org.mockito:mockito-junit-jupiter:5.20.0"
+	testImplementation "com.approvaltests:approvaltests:25.9.0"
+	testImplementation "org.wiremock:wiremock-standalone:3.13.2"
+	testImplementation "com.fasterxml.jackson.core:jackson-databind:2.20.1"
+	testImplementation "org.slf4j:slf4j-simple:2.0.17"
+	testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }

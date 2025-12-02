@@ -1,6 +1,9 @@
 [ {
   "url" : "http://localhost:X/store/order/456",
-  "method" : "GET",
+  "method" : {
+    "name" : "GET",
+    "expected" : "GET"
+  },
   "headers" : {
     "Accept" : "application/json",
     "Connection" : "keep-alive"

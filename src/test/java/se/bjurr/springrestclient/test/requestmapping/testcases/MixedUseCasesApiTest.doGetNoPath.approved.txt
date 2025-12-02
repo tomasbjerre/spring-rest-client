@@ -1,6 +1,9 @@
 [ {
   "url" : "http://localhost:X/base",
-  "method" : "GET",
+  "method" : {
+    "name" : "GET",
+    "expected" : "GET"
+  },
   "headers" : {
     "Accept" : "application/json, application/*+json",
     "Connection" : "keep-alive"

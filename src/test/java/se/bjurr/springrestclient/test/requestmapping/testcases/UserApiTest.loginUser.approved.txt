@@ -1,6 +1,9 @@
 [ {
   "url" : "http://localhost:X/user/login?username=a&password=b",
-  "method" : "GET",
+  "method" : {
+    "name" : "GET",
+    "expected" : "GET"
+  },
   "headers" : {
     "Accept" : "application/json",
     "Connection" : "keep-alive"

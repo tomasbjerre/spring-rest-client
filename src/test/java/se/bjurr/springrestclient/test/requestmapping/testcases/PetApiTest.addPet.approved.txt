@@ -1,11 +1,14 @@
 [ {
   "url" : "http://localhost:X/pet",
-  "method" : "POST",
+  "method" : {
+    "name" : "POST",
+    "expected" : "POST"
+  },
   "headers" : {
     "Accept" : "application/json, application/*+json",
     "Connection" : "keep-alive",
-    "Content-Length" : "98",
-    "Content-Type" : "application/json"
+    "Content-Type" : "application/json",
+    "Transfer-Encoding" : "chunked"
   },
   "cookies" : { },
   "body" : "{\"id\":null,\"category\":{\"id\":123,\"name\":null},\"name\":null,\"photoUrls\":[],\"tags\":null,\"status\":null}"

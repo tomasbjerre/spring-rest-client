@@ -1,11 +1,14 @@
 [ {
   "url" : "http://localhost:X/pet/123/uploadImage",
-  "method" : "POST",
+  "method" : {
+    "name" : "POST",
+    "expected" : "POST"
+  },
   "headers" : {
     "Accept" : "application/json",
     "Connection" : "keep-alive",
-    "Content-Length" : "10",
-    "Content-Type" : "application/json;charset=UTF-8"
+    "Content-Type" : "application/json",
+    "Transfer-Encoding" : "chunked"
   },
   "cookies" : { },
   "body" : "\"the file\""
