@@ -1,6 +1,6 @@
 # Spring Rest Client
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springrestclient/spring-rest-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/se.bjurr.springrestclient/spring-rest-client)
+[![Maven Central](https://img.shields.io/maven-central/v/se.bjurr.springrestclient/spring-rest-client.svg?label=Maven%20Central)](https://search.maven.org/artifact/se.bjurr.springrestclient/spring-rest-client)
 
 Dynamically create Spring (proxy class) client from annotated interface. Very lightweight, only depends on `spring-web:4.3`, compared to alternatives like [Feign](https://github.com/OpenFeign/feign).
 
