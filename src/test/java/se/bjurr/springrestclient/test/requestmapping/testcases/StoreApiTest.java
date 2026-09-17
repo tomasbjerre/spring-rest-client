@@ -3,7 +3,7 @@ package se.bjurr.springrestclient.test.requestmapping.testcases;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import se.bjurr.springrestclient.test.requestmapping.spec.api.StoreApi;
 import se.bjurr.springrestclient.test.requestmapping.spec.model.Order;

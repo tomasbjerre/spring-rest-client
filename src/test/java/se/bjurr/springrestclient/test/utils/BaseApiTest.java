@@ -14,8 +14,8 @@ import java.util.List;
 import org.approvaltests.Approvals;
 import org.approvaltests.core.Options;
 import org.approvaltests.reporters.AutoApproveReporter;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -25,7 +25,7 @@ public abstract class BaseApiTest<T> {
 
   private WireMockServer wiremock;
 
-  @Before
+  @BeforeEach
   public void baseBefore() {
     final WireMockConfiguration configuration =
         WireMockConfiguration //
@@ -38,7 +38,7 @@ public abstract class BaseApiTest<T> {
     this.mockResponse(MediaType.APPLICATION_JSON_VALUE, "{}");
   }
 
-  @After
+  @AfterEach
   public void after() {
     this.wiremock.shutdown();
   }

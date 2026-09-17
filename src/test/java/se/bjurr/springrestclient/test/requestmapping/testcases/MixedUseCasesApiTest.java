@@ -2,7 +2,7 @@ package se.bjurr.springrestclient.test.requestmapping.testcases;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import se.bjurr.springrestclient.test.requestmapping.spec.api.MixedUseCasesApi;
 import se.bjurr.springrestclient.test.utils.BaseApiTest;
 
