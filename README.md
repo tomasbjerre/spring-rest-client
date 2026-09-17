@@ -2,7 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/se.bjurr.springrestclient/spring-rest-client.svg?label=Maven%20Central)](https://search.maven.org/artifact/se.bjurr.springrestclient/spring-rest-client)
 
-Dynamically create Spring (proxy class) client from annotated interface. Very lightweight, only depends on `spring-web:4.3`, compared to alternatives like [Feign](https://github.com/OpenFeign/feign).
+Dynamically create Spring (proxy class) client from annotated interface. Very lightweight, only depends on `spring-web`, compared to alternatives like [Feign](https://github.com/OpenFeign/feign). `spring-web` is a `compileOnly` dependency, so you bring your own version (built and tested against `spring-web:7.0.9`).
 
 Given `MyApiInterface` is a Spring-annotated Java interface.
 

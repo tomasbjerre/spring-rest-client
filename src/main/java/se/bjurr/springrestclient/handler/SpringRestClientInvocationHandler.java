@@ -45,7 +45,7 @@ public class SpringRestClientInvocationHandler<T> implements InvocationHandler {
     URI uri;
     try {
       uri =
-          UriComponentsBuilder.fromHttpUrl(this.url) //
+          UriComponentsBuilder.fromUriString(this.url) //
               .path(invocationDetails.getRequestDetails().getRequestPath())
               .queryParams(invocationDetails.getQueryParams())
               .buildAndExpand(invocationDetails.getPathVariables())
@@ -56,7 +56,7 @@ public class SpringRestClientInvocationHandler<T> implements InvocationHandler {
     final BodyBuilder bodyBuilder =
         RequestEntity.method(invocationDetails.getRequestDetails().getRequestMethod(), uri);
 
-    for (final Entry<String, List<String>> header : invocationDetails.getHeaders().entrySet()) {
+    for (final Entry<String, List<String>> header : invocationDetails.getHeaders().headerSet()) {
       final String[] stringArray = new String[header.getValue().size()];
       for (int i = 0; i < header.getValue().size(); i++) {
         stringArray[i] = header.getValue().get(i);
@@ -90,7 +90,7 @@ public class SpringRestClientInvocationHandler<T> implements InvocationHandler {
   }
 
   private BodyBuilder addUnspecifiedHeaders(final BodyBuilder bodyBuilder) {
-    for (final Entry<String, List<String>> header : this.unspecifiedHeaders.entrySet()) {
+    for (final Entry<String, List<String>> header : this.unspecifiedHeaders.headerSet()) {
       for (final String value : header.getValue()) {
         final String headerName = header.getKey();
         bodyBuilder.header(headerName, value);
