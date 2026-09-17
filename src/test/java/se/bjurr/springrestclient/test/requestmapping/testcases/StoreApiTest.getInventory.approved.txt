@@ -1,10 +1,10 @@
 [ {
-  "url" : "http://localhost:X/store/inventory",
-  "method" : "GET",
+  "body" : "",
+  "cookies" : { },
   "headers" : {
     "Accept" : "application/json",
     "Connection" : "keep-alive"
   },
-  "cookies" : { },
-  "body" : ""
+  "method" : "GET",
+  "url" : "http://localhost:X/store/inventory"
 } ]
