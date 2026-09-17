@@ -1,7 +1,5 @@
 package se.bjurr.springrestclient.test.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.http.Cookie;
 import com.github.tomakehurst.wiremock.http.RequestMethod;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
@@ -13,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+import tools.jackson.databind.json.JsonMapper;
 
 public class WiremockInvocation {
 
@@ -45,11 +44,7 @@ public class WiremockInvocation {
       wi.setMethod(request.getMethod());
       wiList.add(wi);
     }
-    try {
-      return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(wiList);
-    } catch (final JsonProcessingException e) {
-      throw new RuntimeException(e);
-    }
+    return JsonMapper.builder().build().writerWithDefaultPrettyPrinter().writeValueAsString(wiList);
   }
 
   private void setCookie(final String cookie, final String value) {
