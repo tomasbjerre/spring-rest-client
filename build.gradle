@@ -6,7 +6,7 @@ javaExtension {
 	javaVersion = 17
 }
 
-def springVersion = "4.3.30.RELEASE"
+def springVersion = "7.0.9"
 dependencies {
 	compileOnly "org.springframework:spring-web:${springVersion}"
 	implementation "org.slf4j:slf4j-api:2.0.16"
@@ -18,10 +18,7 @@ dependencies {
 	testImplementation "org.mockito:mockito-all:1.8.5"
 	testImplementation "com.approvaltests:approvaltests:12.1.1"
 	testImplementation "org.wiremock:wiremock:3.13.2"
-	// Spring 4.3.30's MappingJackson2HttpMessageConverter (used in tests) hard-requires
-	// Jackson 2 on the classpath; Spring only gained Jackson 3 support in Spring 7.
-	testImplementation "com.fasterxml.jackson.core:jackson-databind:2.13.0"
-	// Used directly by WiremockInvocation for approval-test snapshot serialization.
+	testImplementation "com.fasterxml.jackson.core:jackson-databind:2.22.2"
 	testImplementation "tools.jackson.core:jackson-databind:3.2.2"
 	testImplementation "org.slf4j:slf4j-simple:2.0.16"
 }
