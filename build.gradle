@@ -9,7 +9,7 @@ javaExtension {
 def springVersion = "4.3.30.RELEASE"
 dependencies {
 	compileOnly "org.springframework:spring-web:${springVersion}"
-	implementation "org.slf4j:slf4j-api:2.0.16"
+	implementation "org.slf4j:slf4j-api:2.0.19"
 
 	testImplementation "org.springframework:spring-web:${springVersion}"
 	testImplementation "org.junit.jupiter:junit-jupiter:6.1.3"
