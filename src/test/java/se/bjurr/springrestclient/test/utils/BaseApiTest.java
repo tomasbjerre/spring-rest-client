@@ -17,7 +17,7 @@ import org.approvaltests.reporters.AutoApproveReporter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import se.bjurr.springrestclient.SpringRestClientBuilder;
 
@@ -79,7 +79,7 @@ public abstract class BaseApiTest<T> {
   private RestTemplate restTemplate() {
     final RestTemplate restTemplate = new RestTemplate();
     restTemplate.setMessageConverters(
-        Arrays.asList(new MappingJackson2HttpMessageConverter(), new MappingTextPlain()));
+        Arrays.asList(new JacksonJsonHttpMessageConverter(), new MappingTextPlain()));
     return restTemplate;
   }
 

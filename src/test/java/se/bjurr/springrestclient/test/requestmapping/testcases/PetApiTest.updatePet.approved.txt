@@ -1,5 +1,5 @@
 [ {
-  "body" : "{\"id\":123,\"category\":null,\"name\":null,\"photoUrls\":[],\"tags\":null,\"status\":null}",
+  "body" : "{\"category\":null,\"id\":123,\"name\":null,\"photoUrls\":[],\"status\":null,\"tags\":null}",
   "cookies" : { },
   "headers" : {
     "Accept" : "application/json, application/*+json",

@@ -1,5 +1,5 @@
 [ {
-  "body" : "{\"id\":null,\"username\":null,\"firstName\":null,\"lastName\":null,\"email\":\"asdasd\",\"password\":null,\"phone\":null,\"userStatus\":null}",
+  "body" : "{\"email\":\"asdasd\",\"firstName\":null,\"id\":null,\"lastName\":null,\"password\":null,\"phone\":null,\"userStatus\":null,\"username\":null}",
   "cookies" : { },
   "headers" : {
     "Accept" : "application/json, application/*+json",
