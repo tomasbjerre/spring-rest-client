@@ -11,9 +11,6 @@ import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import java.util.Arrays;
 import java.util.List;
-import org.approvaltests.Approvals;
-import org.approvaltests.core.Options;
-import org.approvaltests.reporters.AutoApproveReporter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.http.MediaType;
@@ -55,12 +52,12 @@ public abstract class BaseApiTest<T> {
     this.wiremock.stubFor(anythingIsOk);
   }
 
-  public void verify() {
+  public void verify(final String expected) {
     final List<ServeEvent> storedEvents = this.getStoredEvents();
 
     final String actual = WiremockInvocation.from(storedEvents);
 
-    Approvals.verify(actual, new Options().withReporter(new AutoApproveReporter()));
+    assertThat(actual).isEqualTo(expected);
   }
 
   public abstract Class<T> getSutClass();

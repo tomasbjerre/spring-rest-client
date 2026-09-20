@@ -24,7 +24,20 @@ public class ProductApiTest extends BaseApiTest<ProductApi> {
 
     assertThat(actual.getName()).isEqualTo("a");
 
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "{\\"id\\":1}",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive",
+            "Content-Type" : "application/json",
+            "Transfer-Encoding" : "chunked"
+          },
+          "method" : "POST",
+          "url" : "http://localhost:X/product"
+        } ]""");
   }
 
   @Test
@@ -35,7 +48,18 @@ public class ProductApiTest extends BaseApiTest<ProductApi> {
 
     assertThat(actual.getName()).isEqualTo("a");
 
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive"
+          },
+          "method" : "GET",
+          "url" : "http://localhost:X/product/1"
+        } ]""");
   }
 
   @Test
@@ -47,13 +71,39 @@ public class ProductApiTest extends BaseApiTest<ProductApi> {
 
     assertThat(actual.getName()).isEqualTo("a");
 
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "{\\"id\\":2}",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive",
+            "Content-Type" : "application/json",
+            "Transfer-Encoding" : "chunked"
+          },
+          "method" : "PUT",
+          "url" : "http://localhost:X/product/1"
+        } ]""");
   }
 
   @Test
   public void deleteProduct() {
     this.getSut().deleteProduct("1");
 
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive",
+            "Content-Length" : "0",
+            "Content-Type" : "application/x-www-form-urlencoded"
+          },
+          "method" : "DELETE",
+          "url" : "http://localhost:X/product/1"
+        } ]""");
   }
 }
