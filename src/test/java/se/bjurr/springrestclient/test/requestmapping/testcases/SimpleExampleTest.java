@@ -32,6 +32,19 @@ public class SimpleExampleTest extends BaseApiTest<StoreApi> {
 
     storeApi.deleteOrder(1234L);
 
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive",
+            "Content-Length" : "0",
+            "Content-Type" : "application/x-www-form-urlencoded"
+          },
+          "method" : "DELETE",
+          "url" : "http://localhost:X/store/order/1234"
+        } ]""");
   }
 }

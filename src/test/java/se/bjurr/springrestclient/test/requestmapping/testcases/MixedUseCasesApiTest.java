@@ -28,18 +28,51 @@ public class MixedUseCasesApiTest extends BaseApiTest<MixedUseCasesApi> {
   @Test
   public void doGetPath() {
     this.getSut().doGetPath(1L);
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive"
+          },
+          "method" : "GET",
+          "url" : "http://localhost:X/base/doget/1"
+        } ]""");
   }
 
   @Test
   public void doGetNoPath() {
     this.getSut().doGetNoPath();
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive"
+          },
+          "method" : "GET",
+          "url" : "http://localhost:X/base"
+        } ]""");
   }
 
   @Test
   public void doGetSlashPath() {
     this.getSut().doGetSlashPath();
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive"
+          },
+          "method" : "GET",
+          "url" : "http://localhost:X/base/"
+        } ]""");
   }
 }

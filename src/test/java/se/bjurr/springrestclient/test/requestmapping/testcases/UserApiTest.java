@@ -27,27 +27,75 @@ public class UserApiTest extends BaseApiTest<UserApi> {
     final ResponseEntity<User> actual = this.getSut().getUserByName("tomas");
 
     assertThat(actual.getBody().getEmail()).isEqualTo("asdasd");
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json",
+            "Connection" : "keep-alive"
+          },
+          "method" : "GET",
+          "url" : "http://localhost:X/user/tomas"
+        } ]""");
   }
 
   @Test
   public void createUser() {
     final User body = new User().email("asdasd");
     this.getSut().createUser(body);
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "{\\"email\\":\\"asdasd\\",\\"firstName\\":null,\\"id\\":null,\\"lastName\\":null,\\"password\\":null,\\"phone\\":null,\\"userStatus\\":null,\\"username\\":null}",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive",
+            "Content-Type" : "application/json",
+            "Transfer-Encoding" : "chunked"
+          },
+          "method" : "POST",
+          "url" : "http://localhost:X/user"
+        } ]""");
   }
 
   @Test
   public void createUsersWithArrayInput() {
     final List<User> body = Arrays.asList(new User().email("asdasd"));
     this.getSut().createUsersWithArrayInput(body);
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "[{\\"email\\":\\"asdasd\\",\\"firstName\\":null,\\"id\\":null,\\"lastName\\":null,\\"password\\":null,\\"phone\\":null,\\"userStatus\\":null,\\"username\\":null}]",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive",
+            "Content-Type" : "application/json",
+            "Transfer-Encoding" : "chunked"
+          },
+          "method" : "POST",
+          "url" : "http://localhost:X/user/createWithArray"
+        } ]""");
   }
 
   @Test
   public void loginUser() {
     this.mockResponse(MediaType.TEXT_PLAIN_VALUE, "whatever");
     this.getSut().loginUser("a", "b");
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json",
+            "Connection" : "keep-alive"
+          },
+          "method" : "GET",
+          "url" : "http://localhost:X/user/login?username=a&password=b"
+        } ]""");
   }
 }

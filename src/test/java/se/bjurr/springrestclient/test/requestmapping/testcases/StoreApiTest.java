@@ -19,7 +19,20 @@ public class StoreApiTest extends BaseApiTest<StoreApi> {
   @Test
   public void deleteOrder() {
     this.getSut().deleteOrder(123L);
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json, application/*+json",
+            "Connection" : "keep-alive",
+            "Content-Length" : "0",
+            "Content-Type" : "application/x-www-form-urlencoded"
+          },
+          "method" : "DELETE",
+          "url" : "http://localhost:X/store/order/123"
+        } ]""");
   }
 
   @Test
@@ -29,7 +42,18 @@ public class StoreApiTest extends BaseApiTest<StoreApi> {
     final Order actual = this.getSut().getOrderById(456L);
 
     assertThat(actual.getId()).isEqualTo(456L);
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json",
+            "Connection" : "keep-alive"
+          },
+          "method" : "GET",
+          "url" : "http://localhost:X/store/order/456"
+        } ]""");
   }
 
   @Test
@@ -42,7 +66,20 @@ public class StoreApiTest extends BaseApiTest<StoreApi> {
     final Order actual = this.getSut().placeOrder(body);
 
     assertThat(actual.getId()).isEqualTo(456L);
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "{\\"complete\\":false,\\"id\\":123,\\"petId\\":null,\\"quantity\\":null,\\"shipDate\\":null,\\"status\\":null}",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json",
+            "Connection" : "keep-alive",
+            "Content-Type" : "application/json",
+            "Transfer-Encoding" : "chunked"
+          },
+          "method" : "POST",
+          "url" : "http://localhost:X/store/order"
+        } ]""");
   }
 
   @Test
@@ -52,6 +89,17 @@ public class StoreApiTest extends BaseApiTest<StoreApi> {
     final Map<String, Integer> actual = this.getSut().getInventory();
 
     assertThat(actual).containsEntry("k", 1);
-    this.verify();
+    this.verify(
+        """
+        [ {
+          "body" : "",
+          "cookies" : { },
+          "headers" : {
+            "Accept" : "application/json",
+            "Connection" : "keep-alive"
+          },
+          "method" : "GET",
+          "url" : "http://localhost:X/store/inventory"
+        } ]""");
   }
 }
