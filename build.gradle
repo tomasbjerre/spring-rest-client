@@ -17,5 +17,5 @@ dependencies {
 	testImplementation "org.mockito:mockito-all:1.10.19"
 	testImplementation "org.wiremock:wiremock:3.13.2"
 	testImplementation "tools.jackson.core:jackson-databind:3.2.3"
-	testImplementation "org.slf4j:slf4j-simple:2.0.19"
+	testImplementation "org.slf4j:slf4j-simple:2.0.20"
 }
