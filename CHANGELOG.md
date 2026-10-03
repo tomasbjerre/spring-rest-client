@@ -1,3 +1,23 @@
+## 2.0.1 (2026-10-03)
+
+### Bug Fixes
+
+-  bump bundle-jar to 2.4.4, fix PMD 7.28 findings ([27a55](https://github.com/tomasbjerre/spring-rest-client/commit/27a55d1a8958c14) Tomas Bjerre)  
+
+### Dependency updates
+
+- update plugin se.bjurr.gradle.bundle-jar to v2.4.1 (#27) ([88f38](https://github.com/tomasbjerre/spring-rest-client/commit/88f3808dd7419ad) renovate[bot])  
+- gradle-conventions 2.4.3 ([419bd](https://github.com/tomasbjerre/spring-rest-client/commit/419bd37ce4d6d5c) Tomas Bjerre)  
+- update dependency org.slf4j:slf4j-simple to v2.0.20 (#26) ([fc758](https://github.com/tomasbjerre/spring-rest-client/commit/fc7589e02e233ba) renovate[bot])  
+### Other changes
+
+**Merge pull request #28 from tomasbjerre/tomasbjerre-patch-3**
+
+* chore(deps): gradle-conventions 2.4.3 
+
+[b8a94](https://github.com/tomasbjerre/spring-rest-client/commit/b8a9497c34b5481) Tomas Bjerre *2026-10-03 16:57:08*
+
+
 ## 1.5.0 (2025-01-22)
 
 ### Features
