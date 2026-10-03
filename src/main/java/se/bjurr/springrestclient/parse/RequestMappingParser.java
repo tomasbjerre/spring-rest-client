@@ -11,6 +11,8 @@ import se.bjurr.springrestclient.parse.model.RequestDetails;
 
 public class RequestMappingParser {
 
+  private RequestMappingParser() {}
+
   public static RequestDetails getRequestDetails(
       final RequestMapping requestMapping, final RequestMapping classLevelRequestMappingOpt) {
     if (requestMapping.method().length != 1) {
