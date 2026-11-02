@@ -1,3 +1,11 @@
+## 2.0.2 (2026-10-27)
+
+### Dependency updates
+
+- update dependency org.springframework:spring-web to v7.0.10 (#33) ([6ce77](https://github.com/tomasbjerre/spring-rest-client/commit/6ce77e3cb934c4a) renovate[bot])  
+- update dependency tools.jackson.core:jackson-databind to v3.2.4 (#32) ([bfe0e](https://github.com/tomasbjerre/spring-rest-client/commit/bfe0ea9efec29ca) renovate[bot])  
+- update dependency gradle to v9.8.2 (#31) ([1887c](https://github.com/tomasbjerre/spring-rest-client/commit/1887cfd10a8214a) renovate[bot])  
+- update dependency gradle to v9.8.1 (#30) ([cd1ea](https://github.com/tomasbjerre/spring-rest-client/commit/cd1eab53a3c519e) renovate[bot])  
 ## 2.0.1 (2026-10-03)
 
 ### Bug Fixes
